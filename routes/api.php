@@ -34,7 +34,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('api_register', 'AuthController@api_register');
 
     Route::group(['middleware' => 'auth:api'], function() {
-        Route::get('logout', 'AuthController@logout');
+        Route::post('logout', 'AuthController@logout');
 
 
         //////////////////////////////////----------------RESTAURANTE----------------//////////////////////////////////////   
