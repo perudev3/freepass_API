@@ -26,13 +26,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'id_rol'=> 3
-        ]);
-
-        tbl_wallet::create([
-            'wallet_fecha' => $date->format('Y-m-d'),
-            'wallet_monto' => 50,
-            'user_id' => $user->id,
+            'id_rol'=> 5
         ]);
 
         $credentials = request(['email', 'password']);
@@ -101,6 +95,7 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
 
         return response()->json([
+            'status' => 200,
             'message' => 'Successfully logged out'
         ]);
     }

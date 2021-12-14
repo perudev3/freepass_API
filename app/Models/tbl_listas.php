@@ -35,6 +35,6 @@ class tbl_listas extends Model
 
     public function invitados()
     {
-        return $this->hasMany(tbl_invitados::class, 'listas_id' , 'listas_id'); 
+        return $this->hasMany(tbl_invitados::class, 'lista_codes_id' , 'lista_codes_id'); 
     }
 }

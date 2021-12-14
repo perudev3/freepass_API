@@ -15,8 +15,6 @@ class TblInvitados extends Migration
     {
         Schema::create('tbl_invitados', function (Blueprint $table) {
             $table->increments('invitados_id');
-            $table->string('telefono')->nullable();
-            $table->string('dni')->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('status')->unsigned()->nullable();
             $table->integer('lista_codes_id')->unsigned()->nullable();

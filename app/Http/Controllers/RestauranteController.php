@@ -18,6 +18,7 @@ use App\Models\tbl_listas;
 use App\Models\tbl_invitados;
 use App\Models\tbl_lista_code;
 use App\Models\tbl_wallet;
+use App\Models\tbl_reservas;
 
 class RestauranteController extends Controller
 {
@@ -64,7 +65,6 @@ class RestauranteController extends Controller
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id
                 ]);    
-
                 $perfil = $request->file('foto_perfil');
                 $cont = 0;
                 foreach($perfil as $img){
@@ -94,7 +94,7 @@ class RestauranteController extends Controller
                     return ['status' =>'success', 'message' =>'Su Registro se actualizó correctamente'];
                 }else{
                     return ['status' =>'error', 'message' =>'Ocurrio un Error'];
-                }  
+                }
         }else{
             
             $validator = \Validator::make($request->all(),[
@@ -120,6 +120,7 @@ class RestauranteController extends Controller
                 if  ($cont === 0){
                     $tbl_restaurante = tbl_restaurante::create([
                         'nombre' => $request->nombre,
+                        'nombre_slug' => str_replace(' ', '', $request->nombre),
                         'razon_social' => $request->razon_social,
                         'direccion' => $request->direccion,
                         'telefono' => $request->telefono,
@@ -188,7 +189,10 @@ class RestauranteController extends Controller
         $link = "http://127.0.0.1:8000/".$restaurante->nombre_slug."/".$codigo_invitacion.'/register_invitados';
         //$link = "https://freepass.es/".$restaurante->nombre_slug."/".$codigo_invitacion.'/register_invitados';
 
-        return $link;
+        return [
+            'status' => 'success',
+            'link' => $link
+        ];
     }
 
     public function RegisterListaInvitados(Request $request,$name_restaurante, $codigo_invitacion)
@@ -339,8 +343,8 @@ class RestauranteController extends Controller
     {
         $user_id = \Auth::user()->id_rol;
         $restaurante = tbl_restaurante::where('user_id', $user_id)->first();
-        if ($user_id == 2) {
-            $lista_evento = $request->array_evento;
+        if ($user_id == 3) {
+            $lista_evento = json_decode($request->form_lista, true);
             if ($lista_evento != null) {
                 $evento = tbl_eventos::create([
                     'nombre' => $request->nombre,
@@ -350,7 +354,24 @@ class RestauranteController extends Controller
                     'hora_fin' => $request->hora_fin,
                     'status' => 1,
                     'restaurantes_id' => $restaurante->restaurantes_id,
-                ]);
+                ]); 
+                $perfil = $request->file('img_eventos');
+                $cont = 0;
+                if (is_array($perfil) || is_object($perfil))
+                {
+                    foreach($perfil as $img){
+                        $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
+                        if  ($cont === 0){
+                            $img_evento = tbl_eventos::where('eventos_id', $evento->eventos_id)->update([
+                                'img_eventos' => $custom_name,
+                            ]);
+                        }else{
+                            break;
+                        }
+                        $img->move(public_path().'/img_eventos',$custom_name);
+                        $cont++;
+                    } 
+                }
                 for ($i=0; $i < count($lista_evento); $i++) {                     
                     $listas = tbl_listas::create([
                         'nombre' => $lista_evento[$i]['nombre'],
@@ -365,14 +386,15 @@ class RestauranteController extends Controller
                         'hora_fin' => $lista_evento[$i]['hora_fin'],
                         'tipo_lista' => $lista_evento[$i]['type_lista'],
                         'zonas_id' => $lista_evento[$i]['zonas_id'],
-                        'lista_codes_id' => $lista_evento[$i]['lista_codes_id'],
+                        'lista_codes_id' => $lista_evento[$i]['lista_codes_id'] ? $lista_evento[$i]['lista_codes_id'] : null,
                         'eventos_id' => $evento->eventos_id,
-                    ]);       
-                    
-                }         
-                
+                    ]);                     
+                }
+
                 if ($listas == true) {
-                    return ['status' => 'success'];
+                    return [
+                        'status' => 'success',
+                    ];
                 }
             }
         }        
@@ -382,7 +404,6 @@ class RestauranteController extends Controller
     {
         $user = \Auth::user();
         if ($user->id_rol==1 || $user->id_rol==2) {
-            $customer_ifo_id = tbl_customer_ifo::where('user_id', $user->id)->first();
             return tbl_reservas::with('user')->where('customer_ifo_id', $customer_ifo_id->customer_ifo_id)->get();
         }else{
             return ['message' => 'no autorizado'];

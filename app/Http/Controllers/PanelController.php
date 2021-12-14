@@ -16,16 +16,7 @@ use App\Models\tbl_eventos;
 
 class PanelController extends Controller
 {
-    public function index()
-    {
-        $user = \Auth::user();
-        if ($user->id_rol==1 || $user->id_rol==2) {
-            return view('cpanel');
-        }else{
-            return ['message' => 'no autorizado'];
-        }          
-    }
-
+    
     public function cpanel()
     {
         $user = \Auth::user();

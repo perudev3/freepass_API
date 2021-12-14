@@ -16,12 +16,10 @@ class CreateTblListaCodesTable extends Migration
         Schema::create('tbl_lista_codes', function (Blueprint $table) {
             $table->increments('lista_codes_id');
             $table->longText('nombre')->nullable();
-            $table->string('codigo_invitacion')->nullable();            
-            $table->integer('listas_id')->unsigned()->nullable();
+            $table->string('codigo_invitacion')->nullable();        
             $table->integer('restaurantes_id')->unsigned()->nullable();
             $table->timestamps();
             
-            $table->foreign('listas_id')->references('listas_id')->on('tbl_listas');
             $table->foreign('restaurantes_id')->references('restaurantes_id')->on('tbl_restaurantes');
         });
     }

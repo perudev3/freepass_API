@@ -20,24 +20,7 @@ use App\Models\tbl_eventos;
 class WelcomeController extends Controller
 {
 
-    public function index()
-    {
-        $token_session = Cookie::get('freepass_session');
-        return view('welcome');
-        $user = \Auth::user();
-        if ($user == NULL) {
-            return view('welcome');
-        }else{
-            if ($token_session == $user->session_user) {
-                if ($user->roles_id==3) {
-                    return view('welcome');
-                }else{
-                    return ['message' => 'not autorizathe'];
-                }            
-            }    
-        }
-        
-    }
+
 
     public function DataCustomerIfo()
     {

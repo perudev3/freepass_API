@@ -17,6 +17,7 @@ class CreateTblRestaurantesTable extends Migration
             $table->increments('restaurantes_id');
             $table->LongText('nombre')->nullable();
             $table->LongText('nombre_slug')->nullable();
+            $table->LongText('razon_social')->nullable();
             $table->LongText('direccion')->nullable();
             $table->LongText('telefono')->nullable();
             $table->LongText('lat')->nullable();

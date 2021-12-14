@@ -7,9 +7,7 @@ use App\User;
 
 class tbl_invitados extends Model
 {
-    protected $fillable = [        
-        'telefono',
-        'dni',
+    protected $fillable = [  
         'user_id',
         'status',
         'lista_codes_id',

@@ -11,7 +11,6 @@ class tbl_lista_code extends Model
     protected $fillable = [
         'nombre',
         'codigo_invitacion',
-        'listas_id',
         'restaurantes_id',
     ];
 

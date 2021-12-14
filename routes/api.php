@@ -32,10 +32,17 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('api_login', 'AuthController@api_login');
     Route::post('api_register', 'AuthController@api_register');
+    
 
     Route::group(['middleware' => 'auth:api'], function() {
+
         Route::post('logout', 'AuthController@logout');
 
+        //////////////////////////////////----------------RESTAURANTE----------------//////////////////////////////////////   
+
+        Route::group(['prefix' => 'master'], function() {
+            Route::get('usuarioslista', 'Mastercontroller@UsuariosLista');
+        });
 
         //////////////////////////////////----------------RESTAURANTE----------------//////////////////////////////////////   
 
@@ -85,6 +92,8 @@ Route::group(['prefix' => 'auth'], function () {
         /**Home no se tiene en cuenta**/
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('user', 'AuthController@user');
+
+        
     });
 
     
