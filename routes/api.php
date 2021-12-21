@@ -26,7 +26,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
 });
 
-
+Route::post('reservas_data', 'RestauranteController@ReservasData');   
 
 Route::group(['prefix' => 'auth'], function () {
 
@@ -96,6 +96,6 @@ Route::group(['prefix' => 'auth'], function () {
         
     });
 
-    
+  
 
 });

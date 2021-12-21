@@ -453,5 +453,10 @@ class RestauranteController extends Controller
         
     }
 
+
+    public function ReservasData(Request $request)
+    {
+        return tbl_restaurante::with('eventos')->where('restaurantes_id', $request->restaurantes_id)->get();
+    }
     
 }

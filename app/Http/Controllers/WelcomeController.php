@@ -19,13 +19,10 @@ use App\Models\tbl_eventos;
 
 class WelcomeController extends Controller
 {
-
-
-
     public function DataCustomerIfo()
     {
         $restaurantes = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->get();
-        $eventos = tbl_eventos::with('restaurante')->get();
+        $eventos = tbl_eventos::all();
         return [
             'restaurantes' => $restaurantes,
             'eventos' => $eventos
@@ -54,13 +51,16 @@ class WelcomeController extends Controller
     public function DataCustomer(Request $request)
     {
         $user = Auth::user();
-        $customer = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->where(
+        $restaurante = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->where(
             'nombre_slug', $request->nombre_slug
-        )->get();
+        )->first();
+
+        $eventos = tbl_eventos::where('restaurantes_id', $restaurante->restaurantes_id)->get();
         
         return [
             'user' => $user,
-            'customer' => $customer
+            'restaurante' => $restaurante,
+            'eventos' => $eventos
         ];
     }
 
