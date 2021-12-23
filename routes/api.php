@@ -22,6 +22,7 @@ Route::group(['prefix' => 'auth'], function () {
 
     Route::post('api_login', 'AuthController@api_login');
     Route::post('api_register', 'AuthController@api_register');
+    Route::post('api_register_comercio', 'AuthController@api_register_comercio');
     
 
     Route::group(['middleware' => 'auth:api'], function() {

@@ -21,7 +21,7 @@ class WelcomeController extends Controller
 {
     public function DataCustomerIfo()
     {
-        $restaurantes = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->get();
+        $restaurantes = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->where('estado', 1)->get();
         $eventos = tbl_eventos::all();
         return [
             'restaurantes' => $restaurantes,
@@ -53,7 +53,7 @@ class WelcomeController extends Controller
         $user = Auth::user();
         $restaurante = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->where(
             'nombre_slug', $request->nombre_slug
-        )->first();
+        )->where('estado', 1)->first();
 
         $eventos = tbl_eventos::where('restaurantes_id', $restaurante->restaurantes_id)->get();
         

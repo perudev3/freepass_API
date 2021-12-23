@@ -72,6 +72,7 @@ class RestauranteController extends Controller
                             'pais_id' => $request->pais_id,
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
+                            'estado' => 0
                         ]);
                     }else{
                         break;
@@ -80,7 +81,7 @@ class RestauranteController extends Controller
                     $cont++;
                 }
                 if ($restaurante==true) {
-                    return ['status' =>'success', 'message' =>'Su Registro se actualizó correctamente'];
+                    return ['status' =>'success', 'message' =>'Se Registró correctamente'];
                 }else{
                     return ['status' =>'error', 'message' =>'Ocurrio un Error'];
                 }
@@ -113,7 +114,8 @@ class RestauranteController extends Controller
                     'lng' => $request->lng,
                     'ruc' => $request->ruc,
                     'pais_id' => $request->pais_id,
-                    'ciudades_id' => $request->ciudades_id
+                    'ciudades_id' => $request->ciudades_id,
+                    'estado' => 0
                 ]);
 
                 if ($restaurante==true) {
@@ -203,7 +205,8 @@ class RestauranteController extends Controller
                     'ruc' => $request->ruc,
                     'user_id'=>$user->id,
                     'pais_id' => $request->pais_id,
-                    'ciudades_id' => $request->ciudades_id
+                    'ciudades_id' => $request->ciudades_id,
+                    
                 ]);
         
                 if ($tbl_restaurante==true) {
