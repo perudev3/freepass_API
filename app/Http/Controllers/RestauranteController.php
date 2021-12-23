@@ -36,7 +36,9 @@ class RestauranteController extends Controller
         $user = \Auth::user(); 
         $tbl_restaurante = tbl_restaurante::where('user_id', $user->id)->first(); 
 
-        if ($tbl_restaurante == true) {
+        if ($tbl_restaurante == false) {
+            if ($request->file('foto_perfil')) {
+            
                 $validator = \Validator::make($request->all(),[
                     'nombre' => 'required',
                     'razon_social' => 'required',
@@ -53,7 +55,55 @@ class RestauranteController extends Controller
                     return response()->json(['error' => $validator->errors()], 401);
                 }
 
-                $tbl_restaurante= tbl_restaurante::where('user_id', $user->id)->update([
+                $perfil = $request->file('foto_perfil');
+                $cont = 0;
+                foreach($perfil as $img){
+                    $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
+                    if  ($cont === 0){
+                        $restaurante = tbl_restaurante::create([
+                            'nombre' => $request->nombre,
+                            'nombre_slug' => str_replace(' ', '', $request->nombre),
+                            'razon_social' => $request->razon_social,
+                            'direccion' => $request->direccion,
+                            'telefono' => $request->telefono,
+                            'lat' => $request->lat,
+                            'lng' => $request->lng,
+                            'ruc' => $request->ruc,
+                            'pais_id' => $request->pais_id,
+                            'ciudades_id' => $request->ciudades_id,
+                            'foto_perfil' => $custom_name,
+                        ]);
+                    }else{
+                        break;
+                    }
+                    $img->move(public_path().'/foto',$custom_name);
+                    $cont++;
+                }
+                if ($restaurante==true) {
+                    return ['status' =>'success', 'message' =>'Su Registro se actualizó correctamente'];
+                }else{
+                    return ['status' =>'error', 'message' =>'Ocurrio un Error'];
+                }
+
+            }else{
+
+                $validator = \Validator::make($request->all(),[
+                    'nombre' => 'required',
+                    'razon_social' => 'required',
+                    'direccion' => 'required',
+                    'telefono' => 'required',
+                    'lat' => 'required',
+                    'lng' => 'required',
+                    'ruc' => 'required',
+                    'pais_id' => 'required',
+                    'ciudades_id' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()], 401);
+                }
+
+                $restaurante = tbl_restaurante::create([
                     'nombre' => $request->nombre,
                     'nombre_slug' => str_replace(' ', '', $request->nombre),
                     'razon_social' => $request->razon_social,
@@ -64,14 +114,53 @@ class RestauranteController extends Controller
                     'ruc' => $request->ruc,
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id
-                ]);    
+                ]);
+
+                if ($restaurante==true) {
+                    return ['status' =>'success', 'message' =>'Su Registro se actualizó correctamente'];
+                }else{
+                    return ['status' =>'error', 'message' =>'Ocurrio un Error'];
+                }
+
+            }
+
+        }else{
+            
+            if ($request->file('foto_perfil')) {
+                $validator = \Validator::make($request->all(),[
+                        'nombre' => 'required',
+                        'razon_social' => 'required',
+                        'direccion' => 'required',
+                        'telefono' => 'required',
+                        'lat' => 'required',
+                        'lng' => 'required',
+                        'ruc' => 'required',
+                        'pais_id' => 'required',
+                        'ciudades_id' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()], 401);
+                }
+                
                 $perfil = $request->file('foto_perfil');
                 $cont = 0;
                 foreach($perfil as $img){
                     $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
                     if  ($cont === 0){
-                        $perfil_restaurante = tbl_restaurante::where('user_id', $user->id)->update([
-                            'foto_perfil' => $custom_name,
+                        $tbl_restaurante = tbl_restaurante::where('user_id', $user->id)->update([
+                            'nombre' => $request->nombre,
+                            'nombre_slug' => str_replace(' ', '', $request->nombre),
+                            'razon_social' => $request->razon_social,
+                            'direccion' => $request->direccion,
+                            'telefono' => $request->telefono,
+                            'lat' => $request->lat,
+                            'lng' => $request->lng,
+                            'ruc' => $request->ruc,
+                            'user_id'=>$user->id,
+                            'pais_id' => $request->pais_id,
+                            'ciudades_id' => $request->ciudades_id,
+                            'foto_perfil' => $custom_name
                         ]);
                     }else{
                         break;
@@ -79,87 +168,101 @@ class RestauranteController extends Controller
                     $img->move(public_path().'/foto',$custom_name);
                     $cont++;
                 }
-                $imgs = $request->file('url_img');
+        
+                if ($tbl_restaurante==true) {
+                    return ['status' =>'success', 'message' =>'Se Actualizo correctamente'];
+                }else{
+                    return ['status' =>'error', 'message' =>'Ocurrio un Error'];
+                }  
+            }else{
+
+                $validator = \Validator::make($request->all(),[
+                        'nombre' => 'required',
+                        'razon_social' => 'required',
+                        'direccion' => 'required',
+                        'telefono' => 'required',
+                        'lat' => 'required',
+                        'lng' => 'required',
+                        'ruc' => 'required',
+                        'pais_id' => 'required',
+                        'ciudades_id' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()], 401);
+                }
+                
+                $tbl_restaurante = tbl_restaurante::where('user_id', $user->id)->update([
+                    'nombre' => $request->nombre,
+                    'nombre_slug' => str_replace(' ', '', $request->nombre),
+                    'razon_social' => $request->razon_social,
+                    'direccion' => $request->direccion,
+                    'telefono' => $request->telefono,
+                    'lat' => $request->lat,
+                    'lng' => $request->lng,
+                    'ruc' => $request->ruc,
+                    'user_id'=>$user->id,
+                    'pais_id' => $request->pais_id,
+                    'ciudades_id' => $request->ciudades_id
+                ]);
+        
+                if ($tbl_restaurante==true) {
+                    return ['status' =>'success', 'message' =>'Se Actualizado correctamente'];
+                }else{
+                    return ['status' =>'error', 'message' =>'Ocurrio un Error'];
+                } 
+
+            }
+        }
+        
+        
+    }
+
+    public function RegisterImgs(Request $request)
+    {
+        $user = \Auth::user(); 
+        $tbl_restaurante = tbl_restaurante::where('user_id', $user->id)->first(); 
+        $perfil = $request->file('url_img');
+        if ($tbl_restaurante == true) {
+
+            if ($perfil != null) {
+
                 $cont = 0;
-                foreach($imgs as $img){
+                foreach($perfil as $img){
                     $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
-                    $imgs_restaurante = img_restaurante::where('restaurantes_id', $tbl_restaurante)->update([
+                    $img_restaurante = img_restaurante::create([
                         'url_img' => $custom_name,
+                        'restaurantes_id' => $tbl_restaurante->restaurantes_id,
                     ]);
                     $img->move(public_path().'/img_restaurantes',$custom_name);
                     $cont++;
                 }
 
-                if ($imgs_restaurante==true) {
-                    return ['status' =>'success', 'message' =>'Su Registro se actualizó correctamente'];
+                if ($img_restaurante==true) {
+                    return ['status' =>'success', 'message' =>'Se registraron las imagenes de su restaurante'];
                 }else{
                     return ['status' =>'error', 'message' =>'Ocurrio un Error'];
                 }
+
+            }else{
+                return ['status' =>'error', 'message' =>'Seleccione imagenes'];
+            }
+
         }else{
             
-            $validator = \Validator::make($request->all(),[
-                    'nombre' => 'required',
-                    'razon_social' => 'required',
-                    'direccion' => 'required',
-                    'telefono' => 'required',
-                    'lat' => 'required',
-                    'lng' => 'required',
-                    'ruc' => 'required',
-                    'pais_id' => 'required',
-                    'ciudades_id' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()], 401);
-            }
-            
-            $perfil = $request->file('foto_perfil');
-            $cont = 0;
-            foreach($perfil as $img){
-                $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
-                if  ($cont === 0){
-                    $tbl_restaurante = tbl_restaurante::create([
-                        'nombre' => $request->nombre,
-                        'nombre_slug' => str_replace(' ', '', $request->nombre),
-                        'razon_social' => $request->razon_social,
-                        'direccion' => $request->direccion,
-                        'telefono' => $request->telefono,
-                        'lat' => $request->lat,
-                        'lng' => $request->lng,
-                        'ruc' => $request->ruc,
-                        'user_id'=>$user->id,
-                        'pais_id' => $request->pais_id,
-                        'ciudades_id' => $request->ciudades_id,
-                        'foto_perfil' => $custom_name
-                    ]);
-                }else{
-                    break;
-                }
-                $img->move(public_path().'/foto',$custom_name);
-                $cont++;
-            }
-
-            $imgs = $request->file('url_img');
-            $cont = 0;
-            foreach($imgs as $img){
-                $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
-                $imgs_restaurante = img_restaurante::create([
-                    'url_img' => $custom_name,
-                    'restaurantes_id' => $tbl_restaurante->restaurantes_id,
-                ]);
-                $img->move(public_path().'/img_restaurantes',$custom_name);
-                $cont++;
-            }
-
-    
-            if ($imgs_restaurante==true) {
-                return ['status' =>'success', 'message' =>'Se Registro correctamente'];
-            }else{
-                return ['status' =>'error', 'message' =>'Ocurrio un Error'];
-            }  
+            return ['status' =>'error', 'message' =>'Ocurrio un Error'];
         }
-        
-        
+
+    }
+
+    public function DeleteImgsRestaurante(Request $request)
+    {
+        $img_restaurante = img_restaurante::where('img_restaurantes_id', $request->img_restaurantes_id)->delete();
+        if ($img_restaurante == true) {
+            return ['status' =>'success', 'message' => 'imagen eliminada'];
+        }else{
+            return ['status' =>'error', 'message' => 'error al eliminar imagen'];
+        }
     }
 
     public function DataListas()

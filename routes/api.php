@@ -3,22 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/**Modulo de Usuarios la ingresar a FreePass**/
+/**Welcome**/
 Route::get('/data_customers_ifo', 'WelcomeController@DataCustomerIfo');
 Route::post('/data_customers', 'WelcomeController@DataCustomer');
 Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');
 Route::get('/categorias', 'PanelController@Categorias');
-
-
-/**Registro de Invitacion**/
-Route::group(['prefix' => '/{name_restaurante}/{codigo_invitacion}'], function () {
-    
-    Route::post('/post_register_invitados', 'RestauranteController@RegisterListaInvitados')->name('post_register_invitados');
-
-});
-Route::post('/confirmar_aceptar_invitacion', 'RestauranteController@AceptarInvitacion')->name('confirmar_aceptar_invitacion');
-
 
 /**Authentication Social**/
 Route::group(['prefix' => 'auth'], function () {
@@ -42,6 +32,10 @@ Route::group(['prefix' => 'auth'], function () {
 
         Route::group(['prefix' => 'master'], function() {
             Route::get('usuarioslista', 'Mastercontroller@UsuariosLista');
+
+            Route::get('roles_categorias', 'Mastercontroller@RolesCategoriasMaster');
+            Route::post('crear_usuario', 'Mastercontroller@CrearUsuario');
+            Route::post('searchusuario', 'Mastercontroller@SearchUsuario');
         });
 
         //////////////////////////////////----------------RESTAURANTE----------------//////////////////////////////////////   
@@ -54,6 +48,8 @@ Route::group(['prefix' => 'auth'], function () {
             /**Informacion**/
             Route::get('/information', 'RestauranteController@Information');
             Route::post('/register_data_ifo', 'RestauranteController@RegisterDataIfo');
+            Route::post('/imgs_restaurante', 'RestauranteController@RegisterImgs');
+            Route::post('/delete_imgs_restaurante', 'RestauranteController@DeleteImgsRestaurante');
 
             /**Zona**/
             Route::get('/list_zonas', 'RestauranteController@ListZonas');
@@ -99,3 +95,12 @@ Route::group(['prefix' => 'auth'], function () {
   
 
 });
+
+
+/**Registro de Invitacion**/
+Route::group(['prefix' => '/{name_restaurante}/{codigo_invitacion}'], function () {
+    
+    Route::post('/post_register_invitados', 'RestauranteController@RegisterListaInvitados')->name('post_register_invitados');
+
+});
+Route::post('/confirmar_aceptar_invitacion', 'RestauranteController@AceptarInvitacion')->name('confirmar_aceptar_invitacion');

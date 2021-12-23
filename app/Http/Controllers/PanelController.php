@@ -21,7 +21,7 @@ class PanelController extends Controller
     {
         $user = \Auth::user();
         $restaurante = tbl_restaurante::where('user_id', $user->id)->first();
-        if ($user->id_rol==1 || $user->id_rol==2) {
+        if ($user->id_rol==3 || $user->id_rol==4) {
             $zonas = tbl_zonas::where('restaurantes_id', $restaurante->restaurantes_id)->get();
             $listas = tbl_lista_code::where('restaurantes_id', $restaurante->restaurantes_id)->get();
             $eventos = tbl_eventos::where('restaurantes_id', $restaurante->restaurantes_id)->get();
