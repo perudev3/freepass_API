@@ -10,7 +10,7 @@ class tbl_zonas extends Model
     protected $fillable = [
         'nombre',
         'portada',
-        'tipo_ambiente',
+        'descripcion',
         'restaurantes_id'
     ];
 

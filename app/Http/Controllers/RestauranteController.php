@@ -277,7 +277,7 @@ class RestauranteController extends Controller
 
     public function DataInvitados($lista_codes_id)
     {
-        return tbl_invitados::with('user_regulares')->where('lista_codes_id', $lista_codes_id)->get();
+        return tbl_invitados::with('user')->where('lista_codes_id', $lista_codes_id)->get();
     }
 
     public function GenerateLink(Request $request)
@@ -286,84 +286,109 @@ class RestauranteController extends Controller
         $restaurante = tbl_restaurante::where('user_id', $user->id)->first();
         $codigo_invitacion = Str::random(6);
 
-        tbl_lista_code::create([
+        $validator = \Validator::make($request->all(),[
+            'nombre' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([ 'status' => 'error', 'message' => $validator->errors() ]);
+        }
+
+        $lista_code = tbl_lista_code::create([
             'nombre' => $request->nombre,
             'codigo_invitacion' => $codigo_invitacion,
             'restaurantes_id' => $restaurante->restaurantes_id,
         ]);
 
-        $link = "http://127.0.0.1:8000/".$restaurante->nombre_slug."/".$codigo_invitacion.'/register_invitados';
-        //$link = "https://freepass.es/".$restaurante->nombre_slug."/".$codigo_invitacion.'/register_invitados';
-
-        return [
-            'status' => 'success',
-            'link' => $link
-        ];
+        if ($lista_code==true) {
+            return [
+                'status' => 'success',
+                'message' => 'Lista creada exitosamente!!'
+            ];
+        }else{
+            return [
+                'status' => 'error',
+                'message' => 'No se pudo crear la lista'
+            ];
+        }
+        
     }
 
-    public function RegisterListaInvitados(Request $request,$name_restaurante, $codigo_invitacion)
+    public function RegisterListaInvitados(Request $request)
     {
-        $validator = \Validator::make($request->all(),[
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'telefono' => 'required',
-            'dni' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 401);
-        }
-
-        $verificacion_codigo = tbl_lista_code::where('codigo_invitacion', $codigo_invitacion)->first();
+        $verificacion_codigo = tbl_lista_code::where('codigo_invitacion', $request->codigo_invitacion)->first();
         if ($verificacion_codigo == true) {
-            $date = Carbon::now();
+
+            $validator = \Validator::make($request->all(),[
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'telefono' => 'required',
+                'dni' => 'required',
+            ]);
+    
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 401);
+            }
+    
+
             $user = User::create([
                 'name' => $request['name'],
                 'email' => $request['email'],
                 'password' => Hash::make($request['password']),
-                'id_rol'=> 3
+                'telefono' => $request['telefono'],
+                'dni' => $request['dni'],
+                'id_rol'=> 5
             ]);
 
             tbl_invitados::create([
-                'lista_codes_id'=>$codigo_invitacion,
-                'telefono' => $request['telefono'],
-                'dni' => $request['dni'],
                 'status' =>0,
                 'user_id' => $user->id,
                 'lista_codes_id' => $verificacion_codigo->lista_codes_id
             ]);
 
-            tbl_wallet::create([
-                'wallet_fecha' => $date->format('Y-m-d'),
-                'wallet_monto' => 50,
-                'user_id' => $user->id,
-            ]);
+            $credentials = request(['email', 'password']);
 
-            if ($user == true) {
-                $this->guard()->login($user);
-                return view('customer.aceptar_invitacion', compact('name_restaurante','codigo_invitacion'));
-            }
+            if (!\Auth::attempt($credentials))
+                return response()->json([
+                    'message' => 'Unauthorized'
+                ], 401);
+
+            $user = $request->user();
+            $tokenResult = $user->createToken('Personal Access Token');
+
+            $token = $tokenResult->token;
+            if ($request->remember_me)
+                $token->expires_at = Carbon::now()->addWeeks(1);
+            $token->save();
+
+            return response()->json([
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+                'user' => $user,
+                'message' => 'Successfully created user!'
+            ], 201);
+
         }else{
             return ['message' => 'NO existe ese codigo de lista'];
         }
-
-        
     }
 
-    public function AceptarInvitacion()
+    public function AceptarInvitacion(Request $request)
     {
         $user = \Auth::user();
-        $status_invitacion = tbl_invitados::where('user_id', $user->id)->first();
+        $lista_code = tbl_lista_code::where('codigo_invitacion', $request->codigo_invitacion)->first();
+        $status_invitacion = tbl_invitados::where('user_id', $user->id)->where('lista_codes_id', $lista_code->lista_codes_id)->first();
         if ($status_invitacion->status == 1) {
             return ['message' => 'Usted ya aceptó la invitación'];
         }else {
-            $query = tbl_invitados::where('user_id', $user->id)->update([
+            $query = tbl_invitados::where('user_id', $user->id)->where('lista_codes_id', $lista_code->lista_codes_id)->update([
                 'status' => 1,
             ]);
     
             if ($query == true) {
-                return ['message' => 'Gracias por estar aceptar la invitación'];
+                return ['status' =>'200'];
             }
         }
         
@@ -384,7 +409,7 @@ class RestauranteController extends Controller
 
         $validator = \Validator::make($request->all(),[
                 'nombre' => 'required',
-                'tipo_ambiente' => 'required',
+                'descripcion' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -399,7 +424,7 @@ class RestauranteController extends Controller
                 $tbl_zonas = tbl_zonas::create([
                     'nombre' => $request->nombre,
                     'portada' => $custom_name,
-                    'tipo_ambiente' => $request->tipo_ambiente,
+                    'descripcion' => $request->descripcion,
                     'restaurantes_id' => $tbl_restaurante->restaurantes_id
                 ]);
             }else{
@@ -427,6 +452,11 @@ class RestauranteController extends Controller
         }else{
             return ['status' =>'error', 'message' =>'Ocurrio un Error'];
         }  
+    }
+
+    public function SearchZonas(Request $request)
+    {
+        return tbl_zonas::where('nombre', 'like', '%' . $request->nombre . '%')->get();
     }
 
 
@@ -509,7 +539,7 @@ class RestauranteController extends Controller
     public function Reservas()
     {
         $user = \Auth::user();
-        if ($user->id_rol==1 || $user->id_rol==2) {
+        if ($user->id_rol==1 || $user->id_rol==2 || $user->id_rol==3) {
             return tbl_reservas::with('user')->where('customer_ifo_id', $customer_ifo_id->customer_ifo_id)->get();
         }else{
             return ['message' => 'no autorizado'];
@@ -557,12 +587,6 @@ class RestauranteController extends Controller
             return ['status' => 'error', 'message' => 'Este código no existe'];
         }
         
-    }
-
-
-    public function ReservasData(Request $request)
-    {
-        return tbl_restaurante::with('eventos')->where('restaurantes_id', $request->restaurantes_id)->get();
     }
     
 }

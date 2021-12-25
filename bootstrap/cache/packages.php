@@ -63,6 +63,13 @@
       0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
+  'laraveles/spanish' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laraveles\\Spanish\\SpanishServiceProvider',
+    ),
+  ),
   'nesbot/carbon' => 
   array (
     'providers' => 

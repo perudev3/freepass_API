@@ -17,7 +17,7 @@ class CreateTblZonasTable extends Migration
             $table->increments('zonas_id');
             $table->LongText('nombre')->nullable();
             $table->LongText('portada')->nullable();
-            $table->LongText('tipo_ambiente')->nullable();
+            $table->LongText('description')->nullable();
             $table->integer('restaurantes_id')->unsigned()->nullable();
             $table->timestamps();
 

@@ -16,7 +16,6 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
 });
 
-Route::post('reservas_data', 'RestauranteController@ReservasData');   
 
 Route::group(['prefix' => 'auth'], function () {
 
@@ -24,8 +23,13 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('api_register', 'AuthController@api_register');
     Route::post('api_register_comercio', 'AuthController@api_register_comercio');
     
+    /**Autenticacion Invitacion Lista**/
+    Route::post('/post_register_invitados', 'RestauranteController@RegisterListaInvitados');
 
     Route::group(['middleware' => 'auth:api'], function() {
+
+        /**Confirmación Invitacion Lista**/
+        Route::post('/confirmar_aceptar_invitacion', 'RestauranteController@AceptarInvitacion');
 
         Route::post('logout', 'AuthController@logout');
 
@@ -55,8 +59,9 @@ Route::group(['prefix' => 'auth'], function () {
             /**Zona**/
             Route::get('/list_zonas', 'RestauranteController@ListZonas');
             Route::post('/register_zonas', 'RestauranteController@RegisterZonas');
+            Route::post('/search_zonas', 'RestauranteController@SearchZonas');
 
-            /**Mis Listas**/
+            /**Listas**/
             Route::get('/data_lista', 'RestauranteController@DataListas');     
             Route::post('/generate_link', 'RestauranteController@GenerateLink');
             Route::get('/data_invitados/{lista_codes_id}', 'RestauranteController@DataInvitados');
@@ -96,12 +101,3 @@ Route::group(['prefix' => 'auth'], function () {
   
 
 });
-
-
-/**Registro de Invitacion**/
-Route::group(['prefix' => '/{name_restaurante}/{codigo_invitacion}'], function () {
-    
-    Route::post('/post_register_invitados', 'RestauranteController@RegisterListaInvitados')->name('post_register_invitados');
-
-});
-Route::post('/confirmar_aceptar_invitacion', 'RestauranteController@AceptarInvitacion')->name('confirmar_aceptar_invitacion');

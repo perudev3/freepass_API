@@ -16,8 +16,8 @@ class tbl_invitados extends Model
     protected $primaryKey ="invitados_id";
 
 
-    public function user_regulares()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'user_id' , 'id')->where('id_rol', 3);
+        return $this->belongsTo(User::class, 'user_id' , 'id')->where('id_rol', 5);
     }
 }
