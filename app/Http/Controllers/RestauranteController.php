@@ -69,10 +69,11 @@ class RestauranteController extends Controller
                             'lat' => $request->lat,
                             'lng' => $request->lng,
                             'ruc' => $request->ruc,
+                            'user_id' => $user->id,
                             'pais_id' => $request->pais_id,
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
-                            'estado' => 0
+                            'estado' => 1
                         ]);
                     }else{
                         break;
@@ -113,9 +114,10 @@ class RestauranteController extends Controller
                     'lat' => $request->lat,
                     'lng' => $request->lng,
                     'ruc' => $request->ruc,
+                    'user_id' => $user->id,
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id,
-                    'estado' => 0
+                    'estado' => 1
                 ]);
 
                 if ($restaurante==true) {
@@ -417,19 +419,14 @@ class RestauranteController extends Controller
         }
         
         $portada = $request->file('portada');
-        $cont = 0;
         foreach($portada as $img){
             $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
-            if  ($cont === 0){
-                $tbl_zonas = tbl_zonas::create([
-                    'nombre' => $request->nombre,
-                    'portada' => $custom_name,
-                    'descripcion' => $request->descripcion,
-                    'restaurantes_id' => $tbl_restaurante->restaurantes_id
-                ]);
-            }else{
-                break;
-            }
+            $tbl_zonas = tbl_zonas::create([
+                'nombre' => $request->nombre,
+                'portada' => $custom_name,
+                'descripcion' => $request->descripcion,
+                'restaurantes_id' => $tbl_restaurante->restaurantes_id
+            ]);
             $img->move(public_path().'/zonas_portada',$custom_name);
             $cont++;
         }
