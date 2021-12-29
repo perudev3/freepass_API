@@ -428,7 +428,6 @@ class RestauranteController extends Controller
                 'restaurantes_id' => $tbl_restaurante->restaurantes_id
             ]);
             $img->move(public_path().'/zonas_portada',$custom_name);
-            $cont++;
         }
 
         $imgs = $request->file('url_img');
