@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\User;
 use App\Models\tbl_wallet;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -19,7 +20,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string'
         ]);
-
+        
         $date = Carbon::now();
 
         $user = User::create([
@@ -49,8 +50,9 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
             'user' => $user,
+            'status' => 200,
             'message' => 'Successfully created user!'
-        ], 201);
+        ]);
     }
 
 
@@ -96,8 +98,9 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
             'user' => $user,
+            'status' => 200,
             'message' => 'Successfully created user!'
-        ], 201);
+        ]);
     }
 
     /**
@@ -115,8 +118,9 @@ class AuthController extends Controller
 
         if (!\Auth::attempt($credentials))
             return response()->json([
-                'message' => 'Unauthorized'
+                'message' => 'Unauthorized',                
             ], 401);
+                
 
         $user = $request->user();
         $tokenResult = $user->createToken('Personal Access Token');
@@ -130,7 +134,8 @@ class AuthController extends Controller
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-            'user' => $user
+            'user' => $user,
+            'status' => 200
         ]);
     }
 

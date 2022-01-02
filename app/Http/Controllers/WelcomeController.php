@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cookie;
 use Mail;
 use App\Mail\SolicitudCoinAdmin;
 use App\Mail\SolicitudCoinUsuario;
+use App\Mail\ResetPassword;
 use App\User;
 use App\Models\tbl_restaurante;
 use App\Models\tbl_wallet;
@@ -21,10 +22,13 @@ class WelcomeController extends Controller
 {
     public function DataCustomerIfo()
     {
-        $restaurantes = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes'])->where('estado', 1)->get();
+        $restaurantes = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes', 'user'])->where('estado', 1)->get();
         $eventos = tbl_eventos::all();
         return [
-            'restaurantes' => $restaurantes,
+            'restaurantes' => $restaurantes->where('user.categorias_id', 1),
+            'discotecas' => $restaurantes->where('user.categorias_id', 2),
+            'bares' => $restaurantes->where('user.categorias_id', 3),
+            'restobar' => $restaurantes->where('user.categorias_id', 4),
             'eventos' => $eventos
         ];
     }
@@ -47,7 +51,6 @@ class WelcomeController extends Controller
         return view('detail_view');
     }
     
-
     public function DataCustomer(Request $request)
     {
         $user = Auth::user();
@@ -63,8 +66,6 @@ class WelcomeController extends Controller
             'eventos' => $eventos
         ];
     }
-
-
 
     public function WalletUser()
     {
@@ -167,8 +168,6 @@ class WelcomeController extends Controller
         
     }
 
-
-
     public function CerrarSesion(Request $request)
     {
         $user = \Auth::user();
@@ -177,6 +176,43 @@ class WelcomeController extends Controller
         return Redirect::to('/');
     }
 
+    public function ResetPassword(Request $request)
+    {
+        $validator = \Validator::make($request->all(),[
+            'email' => 'required',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 401);
+        }
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user==false) {
+            return ['status' => 'error', 'message' => 'El email no existe'];
+        }
+
+        \DB::table('password_resets')->insert([
+            'email' => $request->email,
+            'token' => Str::random(60),
+            'created_at' => \Carbon\Carbon::now()
+        ]);
+
+        $tokenData = \DB::table('password_resets')->where('email', $request->email)->first();
+
+        $link = 'https://freepass.es/password/reset/' . $tokenData->token . '?email=' . urlencode($user->email);
+
+        $response = Mail::to($request->email)->send(
+            new ResetPassword($link)
+        );
+
+        if ($link) {
+            return [
+                'status' => '200',
+                'message' => 'Se envio correctamente'
+            ];
+        }
+        
+    }
 
 }

@@ -26,6 +26,9 @@ Route::group(['prefix' => 'auth'], function () {
     /**Autenticacion Invitacion Lista**/
     Route::post('/post_register_invitados', 'RestauranteController@RegisterListaInvitados');
 
+    /**Reset Password**/
+    Route::post('/reset_password', 'WelcomeController@ResetPassword');
+
     Route::group(['middleware' => 'auth:api'], function() {
 
         /**Confirmación Invitacion Lista**/

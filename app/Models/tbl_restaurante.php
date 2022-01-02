@@ -7,6 +7,7 @@ use App\Models\img_restaurante;
 use App\Models\tbl_pais;
 use App\Models\tbl_ciudades;
 use App\Models\tbl_eventos;
+use App\User;
 
 class tbl_restaurante extends Model
 {
@@ -46,5 +47,10 @@ class tbl_restaurante extends Model
     public function eventos()
     {
         return $this->hasMany(tbl_eventos::class, 'restaurantes_id' , 'restaurantes_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id' , 'id');
     }
 }
