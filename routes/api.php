@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Route;
 /**Welcome**/
 Route::get('/data_customers_ifo', 'WelcomeController@DataCustomerIfo');
 Route::post('/data_customers', 'WelcomeController@DataCustomer');
+Route::get('/categorias/{id}', 'WelcomeController@GetCategoryRestaurants');
+
 Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');
 Route::get('/categorias', 'PanelController@Categorias');
+
 
 /**Authentication Social**/
 Route::group(['prefix' => 'auth'], function () {

@@ -23,6 +23,7 @@ class tbl_restaurante extends Model
         'ruc',
         'user_id',
         'pais_id',
+        'categorias_id',
         'ciudades_id',
     ];
 
@@ -52,5 +53,10 @@ class tbl_restaurante extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id' , 'id');
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(tbl_categoria::class, 'categorias_id' , 'categorias_id');
     }
 }

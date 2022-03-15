@@ -1,7 +1,7 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'freepass',
+    'name' => 'Feepass',
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -10,7 +10,7 @@
     'locale' => 'es',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:683YwUNqAZSCyd/IAxkSw6+G9rsubZ12nqsOF7HQi0c=',
+    'key' => 'base64:87Y++6QJcss6Paw50ykPStfE66bmgnrYMTy04prwDng=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -126,18 +126,18 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'pusher',
+    'default' => 'log',
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '4a9cb10aba3496938dc4',
-        'secret' => '5a7962f787f4a5508fd5',
-        'app_id' => '1299086',
+        'key' => '',
+        'secret' => '',
+        'app_id' => '',
         'options' => 
         array (
-          'cluster' => 'us2',
+          'cluster' => 'mt1',
           'useTLS' => true,
         ),
       ),
@@ -178,7 +178,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\framework/cache/data',
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -217,7 +217,7 @@
         'endpoint' => NULL,
       ),
     ),
-    'prefix' => 'freepass_cache',
+    'prefix' => 'feepass_cache',
   ),
   'cors' => 
   array (
@@ -259,7 +259,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'u688069942_freepass',
+        'database' => 'laranet',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -269,9 +269,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'u688069942_freepass',
-        'username' => 'u688069942_admin_freepass',
-        'password' => 'Gerenci@FreePass2021',
+        'database' => 'laranet',
+        'username' => 'root',
+        'password' => 'root',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -289,9 +289,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'u688069942_freepass',
-        'username' => 'u688069942_admin_freepass',
-        'password' => 'Gerenci@FreePass2021',
+        'database' => 'laranet',
+        'username' => 'root',
+        'password' => 'root',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -304,9 +304,9 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'u688069942_freepass',
-        'username' => 'u688069942_admin_freepass',
-        'password' => 'Gerenci@FreePass2021',
+        'database' => 'laranet',
+        'username' => 'root',
+        'password' => 'root',
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -319,7 +319,7 @@
       'options' => 
       array (
         'cluster' => 'redis',
-        'prefix' => 'freepass_database_',
+        'prefix' => 'feepass_database_',
       ),
       'default' => 
       array (
@@ -348,12 +348,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\app',
+        'root' => 'D:\\laranet-trabajo\\freepass_API\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\app/public',
+        'root' => 'D:\\laranet-trabajo\\freepass_API\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -369,7 +369,7 @@
     ),
     'links' => 
     array (
-      'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\public\\storage' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\app/public',
+      'D:\\laranet-trabajo\\freepass_API\\public\\storage' => 'D:\\laranet-trabajo\\freepass_API\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -403,13 +403,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\logs/laravel.log',
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\logs/laravel.log',
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -459,23 +459,23 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\logs/laravel.log',
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\logs/laravel.log',
       ),
     ),
   ),
   'mail' => 
   array (
-    'default' => 'sendmail',
+    'default' => 'smtp',
     'mailers' => 
     array (
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'sendmail.gmail.com',
-        'port' => '456',
-        'encryption' => 'tls',
-        'username' => 'gerenciafreepass@gmail.com',
-        'password' => '#FreePass@2022',
+        'host' => 'smtp.mailtrap.io',
+        'port' => '2525',
+        'encryption' => NULL,
+        'username' => NULL,
+        'password' => NULL,
       ),
       'ses' => 
       array (
@@ -498,15 +498,15 @@
     ),
     'from' => 
     array (
-      'address' => 'hello@example.com',
-      'name' => 'freepass',
+      'address' => NULL,
+      'name' => 'Feepass',
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\resources\\views/vendor/mail',
+        0 => 'D:\\laranet-trabajo\\freepass_API\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -597,15 +597,15 @@
     ),
     'facebook' => 
     array (
-      'client_id' => '1018523782334997',
-      'client_secret' => '',
-      'redirect' => 'http://localhost:8000/auth/facebook/callback',
+      'client_id' => NULL,
+      'client_secret' => NULL,
+      'redirect' => NULL,
     ),
     'google' => 
     array (
-      'client_id' => '1048756475324-04vrj3ud4v8pmr03ch8d13anf49n8mtm.apps.googleusercontent.com',
-      'client_secret' => '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',
-      'redirect' => 'http://127.0.0.1:8000/auth/google/callback',
+      'client_id' => NULL,
+      'client_secret' => NULL,
+      'redirect' => NULL,
     ),
   ),
   'session' => 
@@ -614,7 +614,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\framework/sessions',
+    'files' => 'D:\\laranet-trabajo\\freepass_API\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -623,7 +623,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'freepass_session',
+    'cookie' => 'feepass_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
@@ -634,9 +634,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\resources\\views',
+      0 => 'D:\\laranet-trabajo\\freepass_API\\resources\\views',
     ),
-    'compiled' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\framework\\views',
+    'compiled' => 'D:\\laranet-trabajo\\freepass_API\\storage\\framework\\views',
     'expires' => true,
   ),
   'flare' => 

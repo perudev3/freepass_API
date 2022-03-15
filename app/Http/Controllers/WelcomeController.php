@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\ReservasStatusChangedEvent;
+use App\Http\Resources\CategoryRestaurantsCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
@@ -13,10 +14,12 @@ use Mail;
 use App\Mail\SolicitudCoinAdmin;
 use App\Mail\SolicitudCoinUsuario;
 use App\Mail\ResetPassword;
+use App\Models\tbl_categoria;
 use App\User;
 use App\Models\tbl_restaurante;
 use App\Models\tbl_wallet;
 use App\Models\tbl_eventos;
+use App\Models\tbl_pais;
 
 class WelcomeController extends Controller
 {
@@ -215,4 +218,11 @@ class WelcomeController extends Controller
         
     }
 
+    public function GetCategoryRestaurants($id)
+    {
+        $categoria=tbl_categoria::findOrfail($id);
+        $restaurantes=$categoria->restaurantes()->latest()->paginate(10);
+
+        return new CategoryRestaurantsCollection($restaurantes);
+    }
 }

@@ -73,7 +73,7 @@ class RestauranteController extends Controller
                             'pais_id' => $request->pais_id,
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
-                            'estado' => 1
+                            'estado' => 1,
                         ]);
                     }else{
                         break;
@@ -88,7 +88,6 @@ class RestauranteController extends Controller
                 }
 
             }else{
-
                 $validator = \Validator::make($request->all(),[
                     'nombre' => 'required',
                     'razon_social' => 'required',
@@ -118,7 +117,8 @@ class RestauranteController extends Controller
                     'user_id' => $user->id,
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id,
-                    'estado' => 1
+                    'estado' => 1,
+                    'categorias_id'=> $request->categorias_id,
                 ]);
 
                 if ($restaurante==true) {
