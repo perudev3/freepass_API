@@ -259,7 +259,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'laranet',
+        'database' => 'D:\\laranet-trabajo\\freepass_API\\database\\database.sqlite',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),

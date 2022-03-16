@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ReservasStatusChangedEvent;
 use App\Http\Resources\CategoryRestaurantsCollection;
+use App\Http\Resources\RestaurantsCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
@@ -224,5 +225,10 @@ class WelcomeController extends Controller
         $restaurantes=$categoria->restaurantes()->latest()->paginate(10);
 
         return new CategoryRestaurantsCollection($restaurantes);
+    }
+    public function SearchRestaurant(Request $request)
+    {
+        $restaurantes=tbl_restaurante::where('nombre', 'like', '%'.$request->nombre.'%')->get();
+        return new RestaurantsCollection($restaurantes);
     }
 }

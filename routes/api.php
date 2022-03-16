@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/data_customers_ifo', 'WelcomeController@DataCustomerIfo');
 Route::post('/data_customers', 'WelcomeController@DataCustomer');
 Route::get('/categorias/{id}', 'WelcomeController@GetCategoryRestaurants');
+Route::get('/restaurante/search', 'WelcomeController@SearchRestaurant');
 
 Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');

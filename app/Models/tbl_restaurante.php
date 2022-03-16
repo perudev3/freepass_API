@@ -59,4 +59,7 @@ class tbl_restaurante extends Model
     {
         return $this->belongsTo(tbl_categoria::class, 'categorias_id' , 'categorias_id');
     }
+    /*public static function search($nombre){
+        return $this->where('nombre', 'like', '%'.$nombre.'%')->get();
+    }*/
 }
