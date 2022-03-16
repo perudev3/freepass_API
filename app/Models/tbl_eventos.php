@@ -22,6 +22,6 @@ class tbl_eventos extends Model
 
     public function restaurante()
     {
-        return $this->belongsTo(tbl_restaurante::class, 'restaurantes_id' , 'restaurantes_id');
+        return $this->hasMany(tbl_restaurante::class, 'restaurantes_id' , 'restaurantes_id');
     }
 }

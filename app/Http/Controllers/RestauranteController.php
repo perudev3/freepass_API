@@ -267,7 +267,8 @@ class RestauranteController extends Controller
 
     public function DeleteImgsRestaurante(Request $request)
     {
-        $img_restaurante = img_restaurante::where('img_restaurantes_id', $request->img_restaurantes_id)->delete();
+        $img_restaurante = img_restaurante::find($request->img_restaurantes_id);
+        $img_restaurante->delete();
         if ($img_restaurante == true) {
             return ['status' =>'success', 'message' => 'imagen eliminada'];
         }else{

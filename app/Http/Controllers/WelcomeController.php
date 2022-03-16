@@ -20,14 +20,15 @@ use App\User;
 use App\Models\tbl_restaurante;
 use App\Models\tbl_wallet;
 use App\Models\tbl_eventos;
-use App\Models\tbl_pais;
+use App\Models\tbl_zonas;
+use App\Models\tbl_favoritos;
 
 class WelcomeController extends Controller
 {
     public function DataCustomerIfo()
     {
         $restaurantes = tbl_restaurante::with(['ciudades','pais', 'img_restaurantes', 'user'])->where('estado', 1)->get();
-        $eventos = tbl_eventos::all();
+        $eventos = tbl_eventos::with('restaurante')->get();
         return [
             'restaurantes' => $restaurantes->where('user.categorias_id', 1),
             'discotecas' => $restaurantes->where('user.categorias_id', 2),
@@ -62,12 +63,15 @@ class WelcomeController extends Controller
             'nombre_slug', $request->nombre_slug
         )->where('estado', 1)->first();
 
-        $eventos = tbl_eventos::where('restaurantes_id', $restaurante->restaurantes_id)->get();
+        $eventos = tbl_eventos::with('restaurante')->where('restaurantes_id', $restaurante->restaurantes_id)->get();
+
+        $zonas = tbl_zonas::with('img_zonas')->where('restaurantes_id', $restaurante->restaurantes_id)->get();
         
         return [
             'user' => $user,
             'restaurante' => $restaurante,
-            'eventos' => $eventos
+            'eventos' => $eventos,
+            'zonas' => $zonas
         ];
     }
 
@@ -217,6 +221,30 @@ class WelcomeController extends Controller
             ];
         }
         
+    }
+    
+    public function AddFavoritos(Request $request)
+    {
+        $user = \Auth::user();
+        
+        $favoritos = tbl_favoritos::where('user_id', $user->id)->where('restaurantes_id', $request->restaurantes_id)->first();
+
+        if ($favoritos == true) {
+            return [
+                'status' => '500',
+                'message' => 'Ya esta en tus favoritos',
+            ];
+        }else{
+            tbl_favoritos::create([
+                'user_id' => $user->id,
+                'restaurantes_id' => $request->restaurantes_id,
+            ]);
+
+            return [
+                'status' => '200',
+                'message' => 'Se ha agregado a sus favoritos',
+            ];
+        }
     }
 
     public function GetCategoryRestaurants($id)

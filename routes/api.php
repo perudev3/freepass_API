@@ -13,18 +13,11 @@ Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');
 Route::get('/categorias', 'PanelController@Categorias');
 
-
-/**Authentication Social**/
-Route::group(['prefix' => 'auth'], function () {
-    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
-    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
-});
-
-
 Route::group(['prefix' => 'auth'], function () {
 
     Route::post('api_login', 'AuthController@api_login');
-    Route::post('api_register', 'AuthController@api_register');
+    Route::post('api_enviar_email', 'AuthController@GenerarCodigo');
+    Route::post('api_register', 'AuthController@api_register');    
     Route::post('api_register_comercio', 'AuthController@api_register_comercio');
     
     /**Autenticacion Invitacion Lista**/
@@ -40,14 +33,17 @@ Route::group(['prefix' => 'auth'], function () {
 
         Route::post('logout', 'AuthController@logout');
 
-        //////////////////////////////////----------------RESTAURANTE----------------//////////////////////////////////////   
+        //////////////////////////////////----------------MASTER----------------//////////////////////////////////////   
 
         Route::group(['prefix' => 'master'], function() {
-            Route::get('usuarioslista', 'Mastercontroller@UsuariosLista');
-
+            Route::get('comerciosusuarioslista', 'Mastercontroller@ComerciosUsuariosLista');
+            Route::get('superusuarioslista', 'Mastercontroller@SuperUsuariosLista');
             Route::get('roles_categorias', 'Mastercontroller@RolesCategoriasMaster');
-            Route::post('crear_usuario', 'Mastercontroller@CrearUsuario');
+            
+            Route::post('crear_usuario_comercio', 'Mastercontroller@CrearComercioUsuario');
             Route::post('searchusuario', 'Mastercontroller@SearchUsuario');
+
+            Route::post('crear_superusuario', 'Mastercontroller@CrearSuperUsuario');
         });
 
         //////////////////////////////////----------------RESTAURANTE----------------//////////////////////////////////////   
@@ -86,6 +82,9 @@ Route::group(['prefix' => 'auth'], function () {
         });
         
         //////////////////////////////////----------------USUARIO----------------//////////////////////////////////////
+
+        /**Agregar a favoritos**/
+        Route::post('/add_favoritos', 'WelcomeController@AddFavoritos');
 
         /**Billetera virtual del Usuario**/
         Route::get('/wallet_user', 'WelcomeController@WalletUser');

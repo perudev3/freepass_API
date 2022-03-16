@@ -7,6 +7,7 @@ use App\Models\img_restaurante;
 use App\Models\tbl_pais;
 use App\Models\tbl_ciudades;
 use App\Models\tbl_eventos;
+use App\Models\tbl_zonas;
 use App\User;
 
 class tbl_restaurante extends Model
@@ -50,6 +51,11 @@ class tbl_restaurante extends Model
         return $this->hasMany(tbl_eventos::class, 'restaurantes_id' , 'restaurantes_id');
     }
 
+    public function zonas()
+    {
+        return $this->hasMany(tbl_zonas::class, 'restaurantes_id' , 'restaurantes_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id' , 'id');
@@ -59,7 +65,7 @@ class tbl_restaurante extends Model
     {
         return $this->belongsTo(tbl_categoria::class, 'categorias_id' , 'categorias_id');
     }
-    /*public static function search($nombre){
+    public static function search($nombre){
         return $this->where('nombre', 'like', '%'.$nombre.'%')->get();
-    }*/
+    }
 }
