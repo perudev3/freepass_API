@@ -11,4 +11,9 @@ class tbl_categoria extends Model
     ];
 
     protected $primaryKey ="categorias_id";
+
+    public function restaurantes()
+    {
+        return $this->hasMany(tbl_restaurante::class, 'categorias_id' , 'categorias_id');
+    }
 }

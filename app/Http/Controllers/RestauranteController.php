@@ -73,7 +73,8 @@ class RestauranteController extends Controller
                             'pais_id' => $request->pais_id,
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
-                            'estado' => 1
+                            'estado' => 1,
+                            'categorias_id' => $user->id
                         ]);
                     }else{
                         break;
@@ -88,7 +89,6 @@ class RestauranteController extends Controller
                 }
 
             }else{
-
                 $validator = \Validator::make($request->all(),[
                     'nombre' => 'required',
                     'razon_social' => 'required',
@@ -99,7 +99,6 @@ class RestauranteController extends Controller
                     'ruc' => 'required',
                     'pais_id' => 'required',
                     'ciudades_id' => 'required',
-                    'estado' => 1
                 ]);
 
                 if ($validator->fails()) {
@@ -118,7 +117,8 @@ class RestauranteController extends Controller
                     'user_id' => $user->id,
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id,
-                    'estado' => 1
+                    'estado' => 1,
+                    'categorias_id' => $user->categorias_id
                 ]);
 
                 if ($restaurante==true) {
@@ -166,7 +166,8 @@ class RestauranteController extends Controller
                             'pais_id' => $request->pais_id,
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
-                            'estado' => 1
+                            'estado' => 1,
+                            'categorias_id' => $user->id
                         ]);
                     }else{
                         break;
@@ -210,7 +211,8 @@ class RestauranteController extends Controller
                     'user_id'=>$user->id,
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id,
-                    'estado' => 1
+                    'estado' => 1,
+                    'categorias_id' => $user->id
                     
                 ]);
         

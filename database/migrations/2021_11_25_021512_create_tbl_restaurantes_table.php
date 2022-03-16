@@ -27,10 +27,14 @@ class CreateTblRestaurantesTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('pais_id')->unsigned()->nullable();
             $table->integer('ciudades_id')->unsigned()->nullable();
+            $table->integer('categorias_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('categorias_id')->references('categorias_id')->on('tbl_categorias');
 
             $table->foreign('pais_id')->references('pais_id')->on('tbl_pais');
             $table->foreign('ciudades_id')->references('ciudades_id')->on('tbl_ciudades');
+
         });
     }
 

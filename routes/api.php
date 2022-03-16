@@ -6,10 +6,23 @@ use Illuminate\Support\Facades\Route;
 /**Welcome**/
 Route::get('/data_customers_ifo', 'WelcomeController@DataCustomerIfo');
 Route::post('/data_customers', 'WelcomeController@DataCustomer');
+Route::get('/categorias/{id}', 'WelcomeController@GetCategoryRestaurants');
+
 Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');
 Route::get('/categorias', 'PanelController@Categorias');
 
+<<<<<<< HEAD
+=======
+
+/**Authentication Social**/
+Route::group(['prefix' => 'auth'], function () {
+    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
+    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
+});
+
+
+>>>>>>> bd2301aff94042951b19eb9e323470da36c6ee03
 Route::group(['prefix' => 'auth'], function () {
 
     Route::post('api_login', 'AuthController@api_login');
