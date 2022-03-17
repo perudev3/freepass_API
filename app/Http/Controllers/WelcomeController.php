@@ -256,7 +256,13 @@ class WelcomeController extends Controller
     }
     public function SearchRestaurant(Request $request)
     {
-        $restaurantes=tbl_restaurante::where('nombre', 'like', '%'.$request->nombre.'%')->get();
+        $restaurantes=tbl_restaurante::search($request->nombre);
         return new RestaurantsCollection($restaurantes);
+    }
+
+    public function GetFavoritesRestaurantsUser()
+    {
+        $favoritos=Auth::user()->favoritos()->get();
+        return response()->json($favoritos);
     }
 }

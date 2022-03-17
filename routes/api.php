@@ -32,6 +32,9 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('/confirmar_aceptar_invitacion', 'RestauranteController@AceptarInvitacion');
 
         Route::post('logout', 'AuthController@logout');
+        
+        /*Traer restaurantes favoritos de usuario autenticado */
+        Route::get('/user/favorites', 'WelcomeController@GetFavoritesRestaurantsUser');
 
         //////////////////////////////////----------------MASTER----------------//////////////////////////////////////   
 

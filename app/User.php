@@ -42,4 +42,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(tbl_roles::class,'roles_id', 'id_rol');
     }
+    public function favoritos()
+    {
+        return $this->belongsToMany('App\Models\tbl_restaurante', 'tbl_favoritos', 'user_id', 'restaurantes_id');
+    }
 }
