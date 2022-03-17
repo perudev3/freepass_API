@@ -12,9 +12,6 @@ Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');
 Route::get('/categorias', 'PanelController@Categorias');
 
-<<<<<<< HEAD
-=======
-
 /**Authentication Social**/
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
@@ -22,7 +19,6 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 
->>>>>>> bd2301aff94042951b19eb9e323470da36c6ee03
 Route::group(['prefix' => 'auth'], function () {
 
     Route::post('api_login', 'AuthController@api_login');

@@ -24,7 +24,7 @@ class AuthController extends Controller
             'codigo' => $codigo_invitacion
         ]);
 
-        Mail::to($request->email)->send(
+        Mail::to(strval($request->email))->send(
             new MailRegisterUser($codigo_invitacion)
         );
 
