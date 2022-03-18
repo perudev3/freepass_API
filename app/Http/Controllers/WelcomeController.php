@@ -55,7 +55,8 @@ class WelcomeController extends Controller
     {
         return view('detail_view');
     }
-    
+
+    //pedir informacion para revisar
     public function DataCustomer(Request $request)
     {
         $user = Auth::user();

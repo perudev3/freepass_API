@@ -74,7 +74,7 @@ class RestauranteController extends Controller
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
                             'estado' => 1,
-                            'categorias_id' => $user->id
+                            'categorias_id' => $user->categorias_id
                         ]);
                     }else{
                         break;
@@ -167,7 +167,7 @@ class RestauranteController extends Controller
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
                             'estado' => 1,
-                            'categorias_id' => $user->id
+                            'categorias_id' => $user->categorias_id
                         ]);
                     }else{
                         break;
@@ -212,7 +212,7 @@ class RestauranteController extends Controller
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id,
                     'estado' => 1,
-                    'categorias_id' => $user->id
+                    'categorias_id' => $user->categorias_id
                     
                 ]);
         
