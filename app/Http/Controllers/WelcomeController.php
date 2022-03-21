@@ -75,15 +75,15 @@ class WelcomeController extends Controller
             'zonas' => $zonas
         ];
     }
-
+    /*
     public function WalletUser()
     {
         $user = Auth::user();
         return tbl_wallet::with('user')->where('user_id', $user->id)->get();
         
-    }
+    }*/
 
-    public function RecargaCoin(Request $request)
+    /*public function RecargaCoin(Request $request)
     {
         $user = \Auth::user();
         $monto = tbl_wallet::where('user_id', $user->id)->first();
@@ -96,12 +96,12 @@ class WelcomeController extends Controller
             new SolicitudCoinAdmin($user, $request->wallet_monto)
         ); */
 
-        Mail::to($request->email_contact)->send(
+        /*Mail::to($request->email_contact)->send(
             new SolicitudCoinUsuario($user, $request->wallet_monto)
         );
-    }
+    }*/
 
-    public function GetMyReservas()
+   /* public function GetMyReservas()
     {
         $user = \Auth::user();
         return tbl_reservas::with('customer_ifo')->where('user_id', $user->id)->get();
@@ -175,7 +175,7 @@ class WelcomeController extends Controller
         }
 
         
-    }
+    }*/
 
     public function CerrarSesion(Request $request)
     {
