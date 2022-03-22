@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class tbl_categoria extends Model
 {
     protected $fillable = [
-        'categorias_nombre'
+        'categorias_nombre',
+        'img_categoria'
     ];
 
     protected $primaryKey ="categorias_id";

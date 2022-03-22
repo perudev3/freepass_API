@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\ReservasStatusChangedEvent;
 use App\Http\Resources\CategoryRestaurantsCollection;
+use App\Http\Resources\RestaurantsCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
@@ -19,12 +20,8 @@ use App\User;
 use App\Models\tbl_restaurante;
 use App\Models\tbl_wallet;
 use App\Models\tbl_eventos;
-<<<<<<< HEAD
 use App\Models\tbl_zonas;
 use App\Models\tbl_favoritos;
-=======
-use App\Models\tbl_pais;
->>>>>>> bd2301aff94042951b19eb9e323470da36c6ee03
 
 class WelcomeController extends Controller
 {
@@ -256,5 +253,16 @@ class WelcomeController extends Controller
         $restaurantes=$categoria->restaurantes()->latest()->paginate(10);
 
         return new CategoryRestaurantsCollection($restaurantes);
+    }
+    public function SearchRestaurant(Request $request)
+    {
+        $restaurantes=tbl_restaurante::search($request->nombre);
+        return new RestaurantsCollection($restaurantes);
+    }
+
+    public function GetFavoritesRestaurantsUser()
+    {
+        $favoritos=Auth::user()->favoritos()->get();
+        return response()->json($favoritos);
     }
 }

@@ -7,17 +7,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/data_customers_ifo', 'WelcomeController@DataCustomerIfo');
 Route::post('/data_customers', 'WelcomeController@DataCustomer');
 Route::get('/categorias/{id}', 'WelcomeController@GetCategoryRestaurants');
+Route::get('/restaurante/search', 'WelcomeController@SearchRestaurant');
 
 Route::get('/paises', 'PanelController@Paises');
 Route::post('/ciudades', 'PanelController@Ciudades');
 Route::get('/categorias', 'PanelController@Categorias');
+
 
 /**Authentication Social**/
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
 });
-
 
 Route::group(['prefix' => 'auth'], function () {
 
@@ -38,6 +39,9 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('/confirmar_aceptar_invitacion', 'RestauranteController@AceptarInvitacion');
 
         Route::post('logout', 'AuthController@logout');
+        
+        /*Traer restaurantes favoritos de usuario autenticado */
+        Route::get('/user/favorites', 'WelcomeController@GetFavoritesRestaurantsUser');
 
         //////////////////////////////////----------------MASTER----------------//////////////////////////////////////   
 
