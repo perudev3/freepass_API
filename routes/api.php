@@ -82,36 +82,35 @@ Route::group(['prefix' => 'auth'], function () {
 
             /**Eventos**/
             Route::get('/list_eventos', 'RestauranteController@ListEventos'); 
-            Route::get('/lista_zonas_restaurante', 'RestauranteController@ListZonasRestaurante');              
+            Route::get('/lista_zonas_restaurante', 'RestauranteController@ListZonasRestaurante');     
+            //preguntar         
             Route::post('/register_eventos', 'RestauranteController@RegisterEventos');
 
             /**Reservas**/
-            Route::get('/reservas_data', 'RestauranteController@Reservas');
+            Route::get('/reservas_data', 'RestauranteController@Reservas');//preguntar
             Route::post('/reserva_status', 'RestauranteController@ReservasStatus');       
 
         });
         
-        //////////////////////////////////----------------USUARIO----------------//////////////////////////////////////
+        /////////////////////-----------USUARIO------------///////////////////////
 
         /**Agregar a favoritos**/
         Route::post('/add_favoritos', 'WelcomeController@AddFavoritos');
 
         /**Billetera virtual del Usuario**/
-        Route::get('/wallet_user', 'WelcomeController@WalletUser');
-        Route::post('/recarga_coin', 'WelcomeController@RecargaCoin');
+        //Route::get('/wallet_user', 'WelcomeController@WalletUser');//preguntar no hay tabla
+        //Route::post('/recarga_coin', 'WelcomeController@RecargaCoin');//preguntar no hay tabla
 
         /**Generar QR Pass**/
-        Route::get('/generate_qr_regular/{customer_ifo_id}/{date}', 'WelcomeController@GenerateQRRegular');
+        //Route::get('/generate_qr_regular/{customer_ifo_id}/{date}', 'WelcomeController@GenerateQRRegular');//tablas no preparadas
 
         /**Reservas del Usuario**/
-        Route::get('/get_mis_reservas', 'WelcomeController@GetMyReservas');
+        //Route::get('/get_mis_reservas', 'WelcomeController@GetMyReservas');//error tabla
 
 
         /**Home no se tiene en cuenta**/
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('user', 'AuthController@user');
-
-        
     });
 
   

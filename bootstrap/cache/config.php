@@ -1,7 +1,11 @@
 <?php return array (
   'app' => 
   array (
+<<<<<<< HEAD
     'name' => 'freepass',
+=======
+    'name' => 'Feepass',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     'env' => 'local',
     'debug' => true,
     'url' => 'http://localhost',
@@ -10,7 +14,11 @@
     'locale' => 'es',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
+<<<<<<< HEAD
     'key' => 'base64:683YwUNqAZSCyd/IAxkSw6+G9rsubZ12nqsOF7HQi0c=',
+=======
+    'key' => 'base64:87Y++6QJcss6Paw50ykPStfE66bmgnrYMTy04prwDng=',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -126,18 +134,31 @@
   ),
   'broadcasting' => 
   array (
+<<<<<<< HEAD
     'default' => 'pusher',
+=======
+    'default' => 'log',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
+<<<<<<< HEAD
         'key' => '4a9cb10aba3496938dc4',
         'secret' => '5a7962f787f4a5508fd5',
         'app_id' => '1299086',
         'options' => 
         array (
           'cluster' => 'us2',
+=======
+        'key' => '',
+        'secret' => '',
+        'app_id' => '',
+        'options' => 
+        array (
+          'cluster' => 'mt1',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
           'useTLS' => true,
         ),
       ),
@@ -178,7 +199,11 @@
       'file' => 
       array (
         'driver' => 'file',
+<<<<<<< HEAD
         'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\framework/cache/data',
+=======
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\framework/cache/data',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
       ),
       'memcached' => 
       array (
@@ -217,7 +242,11 @@
         'endpoint' => NULL,
       ),
     ),
+<<<<<<< HEAD
     'prefix' => 'freepass_cache',
+=======
+    'prefix' => 'feepass_cache',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
   ),
   'cors' => 
   array (
@@ -259,7 +288,11 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
+<<<<<<< HEAD
         'database' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\database\\database.sqlite',
+=======
+        'database' => 'D:\\laranet-trabajo\\freepass_API\\database\\database.sqlite',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -269,9 +302,15 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
+<<<<<<< HEAD
         'database' => 'freepass',
         'username' => 'root',
         'password' => '',
+=======
+        'database' => 'laranet',
+        'username' => 'root',
+        'password' => 'root',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -289,9 +328,15 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
+<<<<<<< HEAD
         'database' => 'freepass',
         'username' => 'root',
         'password' => '',
+=======
+        'database' => 'laranet',
+        'username' => 'root',
+        'password' => 'root',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -304,9 +349,15 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
+<<<<<<< HEAD
         'database' => 'freepass',
         'username' => 'root',
         'password' => '',
+=======
+        'database' => 'laranet',
+        'username' => 'root',
+        'password' => 'root',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'charset' => 'utf8',
         'prefix' => '',
         'prefix_indexes' => true,
@@ -319,7 +370,11 @@
       'options' => 
       array (
         'cluster' => 'redis',
+<<<<<<< HEAD
         'prefix' => 'freepass_database_',
+=======
+        'prefix' => 'feepass_database_',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
       ),
       'default' => 
       array (
@@ -348,12 +403,20 @@
       'local' => 
       array (
         'driver' => 'local',
+<<<<<<< HEAD
         'root' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\app',
+=======
+        'root' => 'D:\\laranet-trabajo\\freepass_API\\storage\\app',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
       ),
       'public' => 
       array (
         'driver' => 'local',
+<<<<<<< HEAD
         'root' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\app/public',
+=======
+        'root' => 'D:\\laranet-trabajo\\freepass_API\\storage\\app/public',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
@@ -369,7 +432,11 @@
     ),
     'links' => 
     array (
+<<<<<<< HEAD
       'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\public\\storage' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\app/public',
+=======
+      'D:\\laranet-trabajo\\freepass_API\\public\\storage' => 'D:\\laranet-trabajo\\freepass_API\\storage\\app/public',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     ),
   ),
   'hashing' => 
@@ -403,13 +470,21 @@
       'single' => 
       array (
         'driver' => 'single',
+<<<<<<< HEAD
         'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\logs/laravel.log',
+=======
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\logs/laravel.log',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
+<<<<<<< HEAD
         'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\logs/laravel.log',
+=======
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\logs/laravel.log',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
         'level' => 'debug',
         'days' => 14,
       ),
@@ -459,7 +534,11 @@
       ),
       'emergency' => 
       array (
+<<<<<<< HEAD
         'path' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\logs/laravel.log',
+=======
+        'path' => 'D:\\laranet-trabajo\\freepass_API\\storage\\logs/laravel.log',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
       ),
     ),
   ),
@@ -471,11 +550,19 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
+<<<<<<< HEAD
         'host' => 'smtp.hostinger.com',
         'port' => '587',
         'encryption' => 'tls',
         'username' => 'usuariofreepass@freepass.es',
         'password' => 'S@muel456',
+=======
+        'host' => 'c1951367.ferozo.com',
+        'port' => '465',
+        'encryption' => 'ssl',
+        'username' => 'devcontact@stivensespinoza.com',
+        'password' => '@Userstivens70',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
       ),
       'ses' => 
       array (
@@ -498,14 +585,20 @@
     ),
     'from' => 
     array (
+<<<<<<< HEAD
       'address' => 'usuariofreepass@freepass.es',
       'name' => 'usuariofreepass@freepass.es',
+=======
+      'address' => 'devcontact@stivensespinoza.com',
+      'name' => 'Example',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     ),
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
+<<<<<<< HEAD
         0 => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\resources\\views/vendor/mail',
       ),
     ),
@@ -516,6 +609,9 @@
         'allow_self_signed' => true,
         'verify_peer' => false,
         'verify_peer_name' => false,
+=======
+        0 => 'D:\\laranet-trabajo\\freepass_API\\resources\\views/vendor/mail',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
       ),
     ),
   ),
@@ -606,6 +702,7 @@
     ),
     'facebook' => 
     array (
+<<<<<<< HEAD
       'client_id' => '1018523782334997',
       'client_secret' => '',
       'redirect' => 'http://localhost:8000/auth/facebook/callback',
@@ -615,6 +712,17 @@
       'client_id' => '1048756475324-04vrj3ud4v8pmr03ch8d13anf49n8mtm.apps.googleusercontent.com',
       'client_secret' => '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',
       'redirect' => 'http://127.0.0.1:8000/auth/google/callback',
+=======
+      'client_id' => NULL,
+      'client_secret' => NULL,
+      'redirect' => NULL,
+    ),
+    'google' => 
+    array (
+      'client_id' => NULL,
+      'client_secret' => NULL,
+      'redirect' => NULL,
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     ),
   ),
   'session' => 
@@ -623,7 +731,11 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
+<<<<<<< HEAD
     'files' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\framework/sessions',
+=======
+    'files' => 'D:\\laranet-trabajo\\freepass_API\\storage\\framework/sessions',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -632,7 +744,11 @@
       0 => 2,
       1 => 100,
     ),
+<<<<<<< HEAD
     'cookie' => 'freepass_session',
+=======
+    'cookie' => 'feepass_session',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
@@ -643,9 +759,15 @@
   array (
     'paths' => 
     array (
+<<<<<<< HEAD
       0 => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\resources\\views',
     ),
     'compiled' => 'C:\\wamp64\\www\\Project_FreePass\\freepass_API\\storage\\framework\\views',
+=======
+      0 => 'D:\\laranet-trabajo\\freepass_API\\resources\\views',
+    ),
+    'compiled' => 'D:\\laranet-trabajo\\freepass_API\\storage\\framework\\views',
+>>>>>>> 42e41ded06bb3abc550748d88f229472335be3a2
     'expires' => true,
   ),
   'flare' => 

@@ -74,7 +74,7 @@ class RestauranteController extends Controller
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
                             'estado' => 1,
-                            'categorias_id' => $user->id
+                            'categorias_id' => $user->categorias_id
                         ]);
                     }else{
                         break;
@@ -167,7 +167,7 @@ class RestauranteController extends Controller
                             'ciudades_id' => $request->ciudades_id,
                             'foto_perfil' => $custom_name,
                             'estado' => 1,
-                            'categorias_id' => $user->id
+                            'categorias_id' => $user->categorias_id
                         ]);
                     }else{
                         break;
@@ -212,7 +212,7 @@ class RestauranteController extends Controller
                     'pais_id' => $request->pais_id,
                     'ciudades_id' => $request->ciudades_id,
                     'estado' => 1,
-                    'categorias_id' => $user->id
+                    'categorias_id' => $user->categorias_id
                     
                 ]);
         
@@ -233,11 +233,13 @@ class RestauranteController extends Controller
         $user = \Auth::user(); 
         $tbl_restaurante = tbl_restaurante::where('user_id', $user->id)->first(); 
         $perfil = $request->file('url_img');
+        
         if ($tbl_restaurante == true) {
 
             if ($perfil != null) {
 
                 $cont = 0;
+
                 foreach($perfil as $img){
                     $custom_name = 'img-'.Str::uuid()->toString().'.'.$img->getClientOriginalExtension();
                     $img_restaurante = img_restaurante::create([
@@ -464,7 +466,7 @@ class RestauranteController extends Controller
 
     public function ListEventos()
     {
-        $user_id = \Auth::user()->id_rol;
+        $user_id = \Auth::user()->id;
         $restaurante = tbl_restaurante::where('user_id', $user_id)->first();
         return tbl_eventos::where('restaurantes_id', $restaurante->restaurantes_id)->get();
     }
@@ -476,12 +478,12 @@ class RestauranteController extends Controller
 
         return tbl_zonas::where('restaurantes_id', $restaurante->restaurantes_id)->get();
     }
-
+    //preguntar
     public function RegisterEventos(Request $request)
     {
-        $user_id = \Auth::user()->id_rol;
-        $restaurante = tbl_restaurante::where('user_id', $user_id)->first();
-        if ($user_id == 3) {
+        $user = \Auth::user();
+        $restaurante = tbl_restaurante::where('user_id', $user->id)->first();
+        if ($user->id_rol == 3) {
             $lista_evento = json_decode($request->form_lista, true);
             if ($lista_evento != null) {
                 $evento = tbl_eventos::create([
@@ -537,7 +539,7 @@ class RestauranteController extends Controller
             }
         }        
     }
-
+    //error
     public function Reservas()
     {
         $user = \Auth::user();
