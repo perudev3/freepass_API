@@ -20,6 +20,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
 });
 
+/**Reset Password**/
+Route::post('/reset_password', 'WelcomeController@ResetPassword');
+
 Route::group(['prefix' => 'auth'], function () {
 
     Route::post('api_login', 'AuthController@api_login');
@@ -30,8 +33,7 @@ Route::group(['prefix' => 'auth'], function () {
     /**Autenticacion Invitacion Lista**/
     Route::post('/post_register_invitados', 'RestauranteController@RegisterListaInvitados');
 
-    /**Reset Password**/
-    Route::post('/reset_password', 'WelcomeController@ResetPassword');
+    
 
     Route::group(['middleware' => 'auth:api'], function() {
 
