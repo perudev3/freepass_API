@@ -3,29 +3,18 @@
 namespace App\Http\Controllers\APIBeta;
 
 use App\Http\Controllers\Controller;
+use App\Zona;
 use Illuminate\Http\Request;
 
 class ZonaController extends Controller
 {
-        /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $zonas=Zona::select(['id','nombre'])->get();
+
+        return response()->json($zonas,200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -45,17 +34,6 @@ class ZonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

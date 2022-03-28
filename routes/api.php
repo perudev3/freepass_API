@@ -24,3 +24,5 @@ Route::group(['prefix' => 'auth'], function () {
 Route::apiResource('eventos', 'ApiBeta\EventoController');
 Route::get('ultimos_eventos', 'ApiBeta\EventoController@lastEvents');
 Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');
+
+Route::apiResource('tipos', 'ApiBeta\TipoController');

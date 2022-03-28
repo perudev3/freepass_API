@@ -20,16 +20,16 @@ class EventoController extends Controller
      */
     public function index()
     {
-        $eventos=Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo')->orderBy('fecha','desc')->paginate(10);
+        $eventos=Evento::whereEvents()->paginate(10);
         return response()->json($eventos,200);
     }
 
     public function lastEvents(Request $request){
-        $eventos=Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo')->orderBy('fecha','desc')->take($request->cantidad)->get();
+        $eventos=Evento::whereEvents()->take($request->cantidad)->get();
         return response()->json($eventos,200);
     }
     public function searchEventsTipos(Request $request){
-        $eventos=Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo')->whereIn('tipo_id',$request->tipos)->orderBy('fecha','desc')->paginate(10);
+        $eventos=Evento::whereEvents()->whereIn('tipo_id',$request->tipos)->paginate(10);
         return response()->json($eventos,200);
     }
     public function show(Evento $evento)

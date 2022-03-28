@@ -13,4 +13,8 @@ class Evento extends Model
     {
         return $this->belongsTo(Tipo::class);
     }
+    public static function whereEvents()
+    {
+        return Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo')->orderBy('fecha','desc');
+    }
 }
