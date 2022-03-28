@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class tbl_reservas extends Model
+class Lista extends Model
 {
     //
 }

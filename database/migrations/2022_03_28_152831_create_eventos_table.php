@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TblEventos extends Migration
+class CreateEventosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class TblEventos extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_eventos', function (Blueprint $table) {
-            $table->increments('eventos_id');
+        Schema::create('eventos', function (Blueprint $table) {
+            $table->id();
             $table->LongText('nombre')->nullable();
             $table->LongText('descripcion')->nullable();
             $table->date('fecha')->nullable();
             $table->time('hora_inicio')->nullable();
             $table->time('hora_fin')->nullable();
-            $table->LongText('img_eventos')->nullable();
-            $table->integer('status')->nullable();
-            $table->integer('restaurantes_id')->unsigned()->nullable();
+            $table->LongText('lugar')->nullable();
+            $table->string('portada_img');
+            $table->boolean('status')->default(true);
+            $table->string('numero_promotor')->nullable();
+            $table->foreignId('tipo_id')->constrained();
             $table->timestamps();
-
-            $table->foreign('restaurantes_id')->references('restaurantes_id')->on('tbl_restaurantes');
         });
     }
 
@@ -36,6 +36,6 @@ class TblEventos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_eventos');
+        Schema::dropIfExists('eventos');
     }
 }

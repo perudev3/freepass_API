@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTblPaisTable extends Migration
+class CreateZonasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateTblPaisTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_pais', function (Blueprint $table) {
-            $table->increments('pais_id');
-            $table->LongText('pais_nombre')->nullable();
+        Schema::create('zonas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('descripcion')->nullable();
+            $table->string('portada_img')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateTblPaisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_pais');
+        Schema::dropIfExists('zonas');
     }
 }
