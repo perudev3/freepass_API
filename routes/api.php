@@ -21,8 +21,13 @@ Route::group(['prefix' => 'auth'], function () {
         });
     });
 });
-Route::apiResource('eventos', 'ApiBeta\EventoController');
-Route::get('ultimos_eventos', 'ApiBeta\EventoController@lastEvents');
-Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');
 
-Route::apiResource('tipos', 'ApiBeta\TipoController');
+Route::group(['prefix' => 'auth'], function () {
+    Route::apiResource('eventos', 'ApiBeta\EventoController');
+    Route::get('ultimos_eventos', 'ApiBeta\EventoController@lastEvents');
+    Route::get('buscarEventos', 'ApiBeta\EventoController@searchEvents');
+    Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');
+    
+    Route::apiResource('tipos', 'ApiBeta\TipoController');
+});
+

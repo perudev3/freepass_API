@@ -11,7 +11,7 @@ class EventoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['index', 'show', 'lastEvents']);
+        $this->middleware('auth:api')->except(['index', 'show', 'lastEvents','searchEventsTipos','searchEvents']);
     }
     /**
      * Display a listing of the resource.
@@ -27,6 +27,11 @@ class EventoController extends Controller
     public function lastEvents(Request $request)
     {
         $eventos = Evento::whereEvents()->take($request->cantidad)->get();
+        return response()->json($eventos, 200);
+    }
+    public function searchEvents(Request $request)
+    {
+        $eventos = Evento::whereEvents()->where($request->campo, 'like', '%'.$request->valor.'%')->paginate(10);
         return response()->json($eventos, 200);
     }
     public function searchEventsTipos(Request $request)
