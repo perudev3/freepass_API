@@ -5,6 +5,30 @@ use Illuminate\Support\Facades\Route;
 
 /**Authentication Social**/
 Route::group(['prefix' => 'auth'], function () {
+    Route::get('ultimos_eventos', 'ApiBeta\EventoController@lastEvents');
+    Route::get('buscarEventos', 'ApiBeta\EventoController@searchEvents');
+    Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');
+    
+    Route::get('eventos', 'ApiBeta\EventoController@index');
+    Route::get('eventos/{id}', 'ApiBeta\EventoController@show');
+    Route::post('eventos', 'ApiBeta\EventoController@store');
+    Route::put('eventos/{id}', 'ApiBeta\EventoController@update');
+    Route::delete('eventos/{id}', 'ApiBeta\EventoController@destroy');
+    Route::get('zonasevento/{evento}', 'ApiBeta\EventoController@zonasEvento');
+
+    Route::get('zonas', 'ApiBeta\ZonaController@index');
+    Route::get('zonas/{id}', 'ApiBeta\ZonaController@show');
+    Route::post('zonas', 'ApiBeta\ZonaController@store');
+    Route::put('zonas/{id}', 'ApiBeta\ZonaController@update');
+    Route::delete('zonas/{id}', 'ApiBeta\ZonaController@destroy');
+    
+    
+    Route::get('tipos', 'ApiBeta\TipoController@index');
+    Route::get('tipos/{id}', 'ApiBeta\TipoController@show');
+    Route::post('tipos', 'ApiBeta\TipoController@store');
+    Route::put('tipos/{id}', 'ApiBeta\TipoController@update');
+    Route::delete('tipos/{id}', 'ApiBeta\TipoController@destroy');
+
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
 });
@@ -20,14 +44,8 @@ Route::group(['prefix' => 'auth'], function () {
             Route::post('crear_superusuario', 'Mastercontroller@CrearSuperUsuario');
         });
     });
+    
 });
 
-Route::group(['prefix' => 'auth'], function () {
-    Route::apiResource('eventos', 'ApiBeta\EventoController');
-    Route::get('ultimos_eventos', 'ApiBeta\EventoController@lastEvents');
-    Route::get('buscarEventos', 'ApiBeta\EventoController@searchEvents');
-    Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');
-    
-    Route::apiResource('tipos', 'ApiBeta\TipoController');
-});
+
 

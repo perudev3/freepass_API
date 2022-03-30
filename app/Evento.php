@@ -17,4 +17,8 @@ class Evento extends Model
     {
         return Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo')->orderBy('fecha','desc');
     }
+    public function zonas()
+    {
+        return $this->belongsToMany(Zona::class,'listas','evento_id','zona_id');
+    }
 }
