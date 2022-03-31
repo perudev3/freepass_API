@@ -21,6 +21,7 @@ class CreateListasTable extends Migration
             $table->string('tipo_lista');
             $table->decimal('precio', 8, 2);
             $table->integer('cantidad_pases');
+            $table->integer('cantidad_disponible');
             $table->text('descripcion')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

@@ -15,12 +15,22 @@ Route::group(['prefix' => 'auth'], function () {
     Route::put('eventos/{id}', 'ApiBeta\EventoController@update');
     Route::delete('eventos/{id}', 'ApiBeta\EventoController@destroy');
     Route::get('zonasevento/{evento}', 'ApiBeta\EventoController@zonasEvento');
+    Route::get('listArtistas', 'ApiBeta\EventoController@listArtistas');
+    Route::post('registrar_imagenes_evento/{evento}', 'ApiBeta\ImageController@store');
+
+    Route::delete('eliminar_imagen/{imagen}', 'ApiBeta\ImageController@destroy');
 
     Route::get('zonas', 'ApiBeta\ZonaController@index');
     Route::get('zonas/{id}', 'ApiBeta\ZonaController@show');
     Route::post('zonas', 'ApiBeta\ZonaController@store');
     Route::put('zonas/{id}', 'ApiBeta\ZonaController@update');
     Route::delete('zonas/{id}', 'ApiBeta\ZonaController@destroy');
+
+    Route::get('artistas', 'ApiBeta\ArtistaController@index');
+    Route::get('artistas/{id}', 'ApiBeta\ArtistaController@show');
+    Route::post('artistas', 'ApiBeta\ArtistaController@store');
+    Route::put('artistas/{id}', 'ApiBeta\ArtistaController@update');
+    Route::delete('artistas/{id}', 'ApiBeta\ArtistaController@destroy');
     
     
     Route::get('tipos', 'ApiBeta\TipoController@index');

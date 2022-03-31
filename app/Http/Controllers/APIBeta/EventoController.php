@@ -12,7 +12,7 @@ class EventoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['index', 'show', 'lastEvents', 'searchEventsTipos', 'searchEvents']);
+        $this->middleware('auth:api')->except(['index', 'show', 'lastEvents', 'searchEventsTipos', 'searchEvents','zonasEvento','listArtistas']);
     }
     /**
      * Display a listing of the resource.
@@ -42,7 +42,7 @@ class EventoController extends Controller
     }
     public function show($id)
     {
-        $evento = Evento::findOrFail($id)->load('tipo');
+        $evento = Evento::findOrFail($id)->load(['tipo','artistas','zonas']);
         return response()->json($evento, 200);
     }
 
@@ -135,5 +135,10 @@ class EventoController extends Controller
     public function zonasEvento(Evento $evento)
     {
         return response()->json($evento->zonas, 200);
+    }
+    public function listArtistas(Request $request)
+    {
+        $artistas=Evento::findOrFail($request->evento)->artistas;
+        return response()->json($artistas, 200);
     }
 }

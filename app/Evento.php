@@ -19,6 +19,14 @@ class Evento extends Model
     }
     public function zonas()
     {
-        return $this->belongsToMany(Zona::class,'listas','evento_id','zona_id');
+        return $this->belongsToMany(Zona::class,'listas','evento_id','zona_id')->withPivot('nombre','tipo_lista','precio','cantidad_pases','descripcion','status');
+    }
+    public function artistas()
+    {
+        return $this->hasMany(Artista::class);
+    }
+    public function imagenes()
+    {
+        return $this->hasMany(Image::class,'evento_id');
     }
 }
