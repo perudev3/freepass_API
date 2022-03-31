@@ -70,9 +70,16 @@ class ArtistaController extends Controller
         }
     }
 
-    public function destroy(Artista $artista)
+    public function destroy($id)
     {
-        $artista= $artista->delete();
-        return response()->json(['message'=>'Se elimino correctamente'], 200);
+        $artista = Artista::findOrFail($id);
+        //eliminar del storage
+        $path = public_path() . '/artistas/' . $artista->path;
+        if (file_exists($path)) {
+            unlink($path);
+        }
+        $artista->delete();
+
+        return response()->json(['message' => 'artista eliminado'], 200);
     }
 }

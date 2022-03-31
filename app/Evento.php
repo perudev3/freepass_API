@@ -29,4 +29,8 @@ class Evento extends Model
     {
         return $this->hasMany(Image::class,'evento_id');
     }
+    public function listas()
+    {
+        return $this->hasMany(Lista::class,'evento_id');
+    }
 }

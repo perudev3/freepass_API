@@ -39,6 +39,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::put('tipos/{id}', 'ApiBeta\TipoController@update');
     Route::delete('tipos/{id}', 'ApiBeta\TipoController@destroy');
 
+    Route::get('listas', 'ApiBeta\ListaController@index');
+    Route::put('listas/{id}', 'ApiBeta\ListaController@update');
+    Route::delete('listas/{id}', 'ApiBeta\ListaController@destroy');
+    Route::post('registrar_listas/{evento}', 'ApiBeta\ListaController@store');
+
+
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
 });
@@ -54,7 +60,6 @@ Route::group(['prefix' => 'auth'], function () {
             Route::post('crear_superusuario', 'Mastercontroller@CrearSuperUsuario');
         });
     });
-    
 });
 
 

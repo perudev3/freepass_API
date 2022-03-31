@@ -20,7 +20,6 @@ class ImageController extends Controller
         if (!is_array($imagenes)) {
             $imagenes = [$imagenes];
         }
-
         //loop throu the array 
         for ($i = 0; $i < count($imagenes); $i++) {
             $file = $imagenes[$i];
