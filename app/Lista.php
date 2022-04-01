@@ -15,4 +15,5 @@ class Lista extends Model
     {
         return $this->belongsTo(Evento::class);
     }
+    
 }

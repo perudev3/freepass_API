@@ -3,6 +3,8 @@
 //use App\Events\ReservasStatusChangedEvent;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('testt', fn () => phpinfo());
 /**Verifity Authentication**/
 Route::group(['middleware' => 'auth'], function () {
 
@@ -94,6 +96,7 @@ Route::get('{no_slug}', 'WelcomeController@ViewProfile')->name('view_profile');
    event(new ReservasStatusChangedEvent);
    return 'Fired';
 }); */
+
 
 
 

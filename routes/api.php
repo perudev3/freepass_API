@@ -44,6 +44,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::delete('listas/{id}', 'ApiBeta\ListaController@destroy');
     Route::post('registrar_listas/{evento}', 'ApiBeta\ListaController@store');
 
+    Route::post('registrar_invitado', 'ApiBeta\InvitadoController@store');
 
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback');    
