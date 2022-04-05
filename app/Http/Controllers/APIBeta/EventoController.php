@@ -43,7 +43,7 @@ class EventoController extends Controller
     public function show($id)
     {
         $evento = Evento::findOrFail($id)->load(['tipo','artistas','zonas']);
-        return response()->json($evento, 200);
+        return response()->json(["evento"=>$evento,"slug"=>$evento->slug], 200);
     }
 
 

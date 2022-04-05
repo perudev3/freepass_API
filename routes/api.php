@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 /**Authentication Social**/
 Route::group(['prefix' => 'auth'], function () {
+    //rutas master
+    Route::middleware(['auth:api', 'roles:Master'])->group(function () {
+        
+    });
+
     Route::get('ultimos_eventos', 'ApiBeta\EventoController@lastEvents');
     Route::get('buscarEventos', 'ApiBeta\EventoController@searchEvents');
     Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');

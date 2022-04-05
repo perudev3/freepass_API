@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str as Str;
 class Evento extends Model
 {
     protected $fillable = ['nombre', 'descripcion',
@@ -32,5 +32,9 @@ class Evento extends Model
     public function listas()
     {
         return $this->hasMany(Lista::class,'evento_id');
+    }
+    public function getSlugAttribute()
+    {
+        return Str::slug($this->nombre);
     }
 }
