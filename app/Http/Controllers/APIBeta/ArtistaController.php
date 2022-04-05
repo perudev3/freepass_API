@@ -14,7 +14,10 @@ class ArtistaController extends Controller
     {
         $this->middleware('auth:api');
     }
-    
+    public function index(){
+        $artistas=Artista::paginate(10);
+        return response()->json($artistas);
+    }
     public function store(ArtistaRequest $request)
     {
         $foto = $request->file('foto');
