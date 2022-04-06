@@ -471,11 +471,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'c1951367.ferozo.com',
-        'port' => '465',
-        'encryption' => 'ssl',
-        'username' => 'devcontact@stivensespinoza.com',
-        'password' => '@Userstivens70',
+        'host' => 'smtp.hostinger.com',
+        'port' => '587',
+        'encryption' => 'tls',
+        'username' => 'usuariofreepass@freepass.es',
+        'password' => 'S@muel456',
       ),
       'ses' => 
       array (
@@ -498,8 +498,8 @@
     ),
     'from' => 
     array (
-      'address' => 'devcontact@stivensespinoza.com',
-      'name' => 'Example',
+      'address' => 'usuariofreepass@freepass.es',
+      'name' => 'usuariofreepass@freepass.es',
     ),
     'markdown' => 
     array (

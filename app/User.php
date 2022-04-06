@@ -47,6 +47,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(tbl_roles::class, 'id_rol','roles_id');
     }
+    public function eventos()
+    {
+        return $this->hasMany(Evento::class);
+    }
+    public function zonas()
+    {
+        return $this->hasMany(Zona::class);
+    }
     public function hasRoles(array $roles){
         foreach($roles as $rol){
             if($this->rol->roles_name==$rol){

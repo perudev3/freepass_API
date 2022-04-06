@@ -18,6 +18,7 @@ class CreateZonasTable extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             $table->string('portada_img')->nullable();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

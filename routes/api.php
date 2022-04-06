@@ -15,6 +15,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('eventos_filtro', 'ApiBeta\EventoController@searchEventsTipos');
     
     Route::get('eventos', 'ApiBeta\EventoController@index');
+    //listar eventos del usuario autenticado
+    Route::get('eventos-usuario','ApiBeta\EventoController@myEvents');
     Route::get('eventos/{id}', 'ApiBeta\EventoController@show');
     Route::post('eventos', 'ApiBeta\EventoController@store');
     Route::put('eventos/{id}', 'ApiBeta\EventoController@update');
@@ -26,6 +28,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::delete('eliminar_imagen/{imagen}', 'ApiBeta\ImageController@destroy');
 
     Route::get('zonas', 'ApiBeta\ZonaController@index');
+    Route::get('zonas-usuario','ApiBeta\ZonaController@myZonas');
     Route::get('zonas/{id}', 'ApiBeta\ZonaController@show');
     Route::post('zonas', 'ApiBeta\ZonaController@store');
     Route::put('zonas/{id}', 'ApiBeta\ZonaController@update');

@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Zona extends Model
 {
-    protected $fillable = ['nombre','descripcion','portada_img'];
+    protected $fillable = ['nombre','descripcion','portada_img','user_id'];
 }

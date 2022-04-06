@@ -15,6 +15,8 @@ class CreateEventosTable extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('tipo_id')->constrained();
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->LongText('nombre')->nullable();
             $table->LongText('descripcion')->nullable();
             $table->date('fecha')->nullable();
@@ -28,8 +30,7 @@ class CreateEventosTable extends Migration
             $table->text('lat')->nullable();
             $table->text('lng')->nullable();
             $table->timestamps();
-            $table->foreignId('tipo_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            
         });
     }
 

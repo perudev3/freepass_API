@@ -23,7 +23,10 @@ class ZonaController extends Controller
         return response()->json($zonas,200);
     }
 
-
+    public function myZonas()
+    {
+        return response()->json(auth()->user()->zonas,200);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -32,28 +35,22 @@ class ZonaController extends Controller
      */
     public function store(ZonaRequest $request)
     {
-        $portada = $request->file('portada_img');
-        $cont = 0;
-        foreach ($portada as $img) {
-            $custom_name = 'img-' . Str::uuid()->toString() . '.' . $img->getClientOriginalExtension();
-            if ($cont === 0) {
-                $zona = Zona::create([
-                    'nombre' => $request->nombre,
-                    'portada_img' => $custom_name,
-                    'descripcion' => $request->descripcion,
-                ]);
-            } else {
-                break;
+        $zona = new Zona;
+        $zona->nombre = $request->nombre;
+        $zona->descripcion = $request->descripcion;
+        $zona->user_id = auth()->user()->id;
+        if($request->hasFile('portada_img')){
+            $portada = $request->file('portada_img');
+            if (!is_array($portada)) {
+                $portada = [$portada];
             }
-            $img->move(public_path() . '/zonas', $custom_name);
+            $custom_name = 'img-' . Str::uuid()->toString() . '.' . $portada[0]->getClientOriginalExtension();
+            $portada[0]->move(public_path() . '/zonas', $custom_name);
+            $zona->portada_img = $custom_name;
+        }
 
-            $cont++;
-        }
-        if ($zona == true) {
-            return ['status' => 'success', 'message' => 'Se Registró correctamente'];
-        } else {
-            return ['status' => 'error', 'message' => 'Ocurrio un Error'];
-        }
+        $zona->save();
+        return response()->json($zona, 201);
     }
 
     /**
@@ -88,5 +85,8 @@ class ZonaController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function validateAction($user_id){
+        return $user_id===auth()->user()->id || auth()->user()->id_rol===1;
     }
 }
