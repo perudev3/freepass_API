@@ -37,6 +37,7 @@ class InvitadoController extends Controller
                         'telefono'=>$invitado->telefono,
                         'codigo_invitacion'=>$codigo,
                         'status'=>0,
+                        
                     ]);
                     $lista->update([
                         'cantidad_disponible'=>$lista->cantidad_disponible-1,

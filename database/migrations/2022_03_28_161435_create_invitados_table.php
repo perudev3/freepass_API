@@ -15,7 +15,7 @@ class CreateInvitadosTable extends Migration
     {
         Schema::create('invitados', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lista_id')->constrained();
+            $table->foreignId('compra_id')->constrained();
             $table->string('nombre');
             $table->string('apellido');
             $table->string('dni', 8);

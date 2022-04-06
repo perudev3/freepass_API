@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use App\User;
-use App\Models\tbl_wallet;
 use App\Models\tbl_codigo_activacion;
 use App\Mail\MailRegisterUser;
-use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -40,39 +38,45 @@ class AuthController extends Controller
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string'
         ]);
-
+        
         $date = Carbon::now();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'id_rol' => $request->roles_id,
-        ]);
+        $codigo = tbl_codigo_activacion::where('codigo', $request->codigo)->first();
+        if ($codigo==true) {
 
-        $credentials = request(['email', 'password']);
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'id_rol'=> $request->roles_id,
+            ]);
+    
+            $credentials = request(['email', 'password']);
+    
+            if (!\Auth::attempt($credentials))
+                return response()->json([
+                    'message' => 'Unauthorized'
+                ], 401);
+    
+            $user = $request->user();
+            $tokenResult = $user->createToken('Personal Access Token');
+    
+            $token = $tokenResult->token;
+            if ($request->remember_me)
+                $token->expires_at = Carbon::now()->addWeeks(1);
+            $token->save();  
 
-        if (!\Auth::attempt($credentials))
             return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
-
-        $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
-
-        $token = $tokenResult->token;
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
-        $token->save();
-
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
-            'user' => $user,
-            'status' => 200,
-            'message' => 'Usuario Creado con exito!'
-        ]);
+                'access_token' => $tokenResult->accessToken,
+                'token_type' => 'Bearer',
+                'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString(),
+                'user' => $user,
+                'status' => 200,
+                'message' => 'Usuario Creado con exito!'
+            ]);
+        }else{
+            return ['status'=>401,'message' => 'Código incorrecto'];
+        }
     }
 
 
