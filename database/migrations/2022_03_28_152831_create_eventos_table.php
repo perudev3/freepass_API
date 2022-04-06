@@ -25,6 +25,9 @@ class CreateEventosTable extends Migration
             $table->boolean('status')->default(true);
             $table->string('numero_promotor')->nullable();
             $table->foreignId('tipo_id')->constrained();
+            $table->string('slug')->unique();
+            $table->text('lat')->nullable();
+            $table->text('lng')->nullable();
             $table->timestamps();
         });
     }

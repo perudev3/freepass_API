@@ -7,7 +7,7 @@ use Illuminate\Support\Str as Str;
 class Evento extends Model
 {
     protected $fillable = ['nombre', 'descripcion',
-    'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'portada_img', 'status', 'numero_promotor','tipo_id'];
+    'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'portada_img', 'status', 'numero_promotor','tipo_id','slug','lat','lng'];
 
     public function tipo()
     {
@@ -33,8 +33,5 @@ class Evento extends Model
     {
         return $this->hasMany(Lista::class,'evento_id');
     }
-    public function getSlugAttribute()
-    {
-        return Str::slug($this->nombre);
-    }
+    
 }

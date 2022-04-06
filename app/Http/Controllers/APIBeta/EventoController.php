@@ -40,10 +40,10 @@ class EventoController extends Controller
         $eventos = Evento::whereEvents()->whereIn('tipo_id', $request->tipos)->paginate(10);
         return response()->json($eventos, 200);
     }
-    public function show($id)
+    public function show($slug)
     {
-        $evento = Evento::findOrFail($id)->load(['tipo','artistas','zonas']);
-        return response()->json(["evento"=>$evento,"slug"=>$evento->slug], 200);
+        $evento = Evento::where('slug',$slug)->with(['tipo','artistas','zonas'])->get();
+        return response()->json($evento, 200);
     }
 
 
@@ -51,6 +51,9 @@ class EventoController extends Controller
     {
 
         $portada = $request->file('portada_img');
+        if (!is_array($portada)) {
+            $portada = [$portada];
+        }
         $cont = 0;
         foreach ($portada as $img) {
             $custom_name = 'img-' . Str::uuid()->toString() . '.' . $img->getClientOriginalExtension();
@@ -65,6 +68,9 @@ class EventoController extends Controller
                     'portada_img' => $custom_name,
                     'descripcion' => $request->descripcion,
                     'numero_promotor' => $request->numero_promotor,
+                    'lat'=>$request->lat,
+                    'lng'=>$request->lng,
+                    'slug'=>Str::slug($request->nombre),
                 ]);
             } else {
                 break;
@@ -104,6 +110,9 @@ class EventoController extends Controller
                     'portada_img' => $custom_name,
                     'descripcion' => $request->descripcion,
                     'numero_promotor' => $request->numero_promotor,
+                    'lat'=>$request->lat,
+                    'lng'=>$request->lng,
+                    'slug'=>Str::slug($request->nombre),
                 ]);
             } else {
                 break;
