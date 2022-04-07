@@ -32,33 +32,22 @@ class ListaController extends Controller
      */
     public function store(Request $request,$evento_id)
     {
-        try {
-            DB::beginTransaction();
-            //convertir en array
-            $listas=json_decode(json_encode($request->datos));
-            foreach ($listas as $lista) {
-               Lista::create([
-                   'zona_id'=>$lista->zona_id,
-                   'evento_id'=>$evento_id,
-                   'nombre'=>$lista->nombre,
-                   'tipo_lista'=>$lista->tipo_lista,
-                   'precio'=>$lista->precio,
-                   'cantidad_pases'=>$lista->cantidad_pases,
-                   'cantidad_disponible'=>$lista->cantidad_disponible,
-                   'descripcion'=>$lista->descripcion,
-                   'status'=>1
-               ]);
-            }
-            DB::commit();
-            return response()->json(['message' => 'Listas registradas con exito'], 200);
-        } catch (\Exception $e) {
-            DB::rollBack();
-    		return response()->json([
-                'success'=>false,
-                'message'=>$e->getMessage(),
-            ]);
-            
-    	}
+        Lista::create([
+            'zona_id'=>$request->zona_id,
+            'evento_id'=>$evento_id,
+            'nombre'=>$request->nombre,
+            'tipo_lista'=>$request->tipo_lista,
+            'precio'=>$request->precio,
+            'cantidad_pases'=>$request->cantidad_pases,
+            'cantidad_disponible'=>$request->cantidad_disponible,
+            'descripcion'=>$request->descripcion,
+            'status'=>1
+        ]);
+
+        return response()->json([
+            'message'=>'Lista creada con exito',
+            'status'=>'success'
+        ],201);
     }
 
     /**
