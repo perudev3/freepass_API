@@ -46,7 +46,7 @@ class EventoController extends Controller
     }
     public function show($slug)
     {
-        $evento = Evento::where('slug',$slug)->with(['tipo','artistas','zonas'])->get();
+        $evento = Evento::where('slug',$slug)->with(['tipo','artistas','zonas','listas'])->get();
         return response()->json($evento, 200);
     }
 
