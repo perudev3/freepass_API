@@ -76,6 +76,7 @@ class EventoController extends Controller
                     'lng'=>$request->lng,
                     'slug'=>Str::slug($request->nombre),
                     'user_id'=>auth()->user()->id,
+                    'place_id'=>$request->place_id
                 ]);
             } else {
                 break;
@@ -112,6 +113,7 @@ class EventoController extends Controller
             $evento->lat=$request->lat;
             $evento->lng=$request->lng;
             $evento->slug=Str::slug($request->nombre);
+            $evento->place_id=$request->place_id;
             if($request->file('portada_img')){
                 $portada = $request->file('portada_img');
                 if (!is_array($portada)) {

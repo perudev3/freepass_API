@@ -17,6 +17,7 @@ class CreateEventosTable extends Migration
             $table->id();
             $table->foreignId('tipo_id')->constrained();
             $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('place_id')->constrained();
             $table->LongText('nombre')->nullable();
             $table->LongText('descripcion')->nullable();
             $table->date('fecha')->nullable();

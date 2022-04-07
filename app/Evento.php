@@ -7,7 +7,7 @@ use Illuminate\Support\Str as Str;
 class Evento extends Model
 {
     protected $fillable = ['nombre', 'descripcion',
-    'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'portada_img', 'status', 'numero_promotor','tipo_id','slug','lat','lng','user_id'];
+    'fecha', 'hora_inicio', 'hora_fin', 'lugar', 'portada_img', 'status', 'numero_promotor','tipo_id','slug','lat','lng','user_id','place_id'];
 
     public function tipo()
     {

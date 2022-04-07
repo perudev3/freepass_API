@@ -32,6 +32,7 @@ class EventoRequest extends FormRequest
             'lugar' => 'required|string|max:255',
             'descripcion' => 'required|string|max:255',
             'numero_promotor' => 'required|string|max:9',
+            'place_id' => 'required|integer',
         ];
     }
 }
