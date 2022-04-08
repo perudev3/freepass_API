@@ -27,7 +27,7 @@ class EventoController extends Controller
     }
     public function myEvents()
     {
-        return auth()->user()->eventos()->latest()->paginate();
+        return auth()->user()->eventos()->with('tipo')->latest()->paginate();
     }
     public function lastEvents(Request $request)
     {
@@ -123,9 +123,9 @@ class EventoController extends Controller
                 $evento->portada_img = $custom_name;
                 $portada[0]->move(public_path() . '/eventos', $custom_name);
             }
-            return response()->json(['message'=>"Eevento actualizado correctamente"]);
+            return response()->json(['status' => 'success', 'message' => 'Evento actuaizado correctamente'], 200);
         }else{
-            return response()->json(['message'=>'No tiene permisos para actualizar este evento']);
+            return response()->json(['status' => 'error', 'message' => 'No tiene permisos para actualizar este evento']);
         }
         
     }
@@ -141,9 +141,9 @@ class EventoController extends Controller
         if($this->validateAction($evento->user_id)){
             $evento->update(['status' => !$evento->status]);
             $message = $evento->status ? 'Evento activado' : 'Evento cancelado';
-            return response()->json(['message' => $message]);
+            return response()->json(['status'=>'error','message' => $message]);
         }
-        return response()->json(['message' => 'no tiene los permisos necesarios para eliminar estos registros']);
+        return response()->json(['status' => 'error', 'message' => 'No tiene permisos para eliminar este evento']);
         
     }
 

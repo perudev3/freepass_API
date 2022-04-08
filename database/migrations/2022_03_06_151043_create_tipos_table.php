@@ -1,5 +1,6 @@
 <?php
 
+use App\Tipo;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,9 @@ class CreateTiposTable extends Migration
             $table->string('nombre');
             $table->timestamps();
         });
+        Tipo::create([
+            'nombre' => 'Restaurante',
+        ]);
     }
 
     /**

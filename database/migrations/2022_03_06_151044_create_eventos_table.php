@@ -1,5 +1,6 @@
 <?php
 
+use App\Evento;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -31,8 +32,25 @@ class CreateEventosTable extends Migration
             $table->text('lat')->nullable();
             $table->text('lng')->nullable();
             $table->timestamps();
-            
         });
+        Evento::create([
+            'tipo_id' => 1,
+            'user_id' => 1,
+            'place_id' => 1,
+            'nombre' => 'Evento 1',
+            'descripcion' => 'Descripcion del evento 1',
+            'fecha' => '2026-03-06',
+            'hora_inicio' => '15:10:00',
+            'hora_fin' => '16:10:00',
+            'lugar' => 'Lugar del evento 1',
+            'portada_img' => 'portada_img_1',
+            'status' => true,
+            'numero_promotor' => '1',
+            'slug' => 'evento_1',
+            'lat' => '-12.1234',
+            'lng' => '-12.1234',
+        ]);
+
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Invitado;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,6 +27,17 @@ class CreateInvitadosTable extends Migration
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        Invitado::create([
+            'compra_id' => 1,
+            'nombre' => 'Invitado 1',
+            'apellido' => 'Invitado 1',
+            'dni' => 'Invitado 1',
+            'carnet_vacunacion' => 'Invitado 1',
+            'email' => 'invitad@gmail.com',
+            'telefono' => 'Invitado 1',
+            'codigo_invitacion' => 'Invitado 1',
+            'status' => true,
+        ]);
     }
 
     /**

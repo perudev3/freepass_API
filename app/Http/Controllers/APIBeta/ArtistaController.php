@@ -46,7 +46,7 @@ class ArtistaController extends Controller
     }
 
    
-    public function update(Request $request, Artista $artista)
+    public function update(ArtistaRequest $request, Artista $artista)
     {
         $foto = $request->file('foto');
         $cont = 0;

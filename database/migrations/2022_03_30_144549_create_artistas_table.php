@@ -1,5 +1,6 @@
 <?php
 
+use App\Artista;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,6 +22,12 @@ class CreateArtistasTable extends Migration
             $table->foreignId('evento_id')->constrained();
             $table->timestamps();
         });
+        Artista::create([
+            'nombre' => 'Artista 1',
+            'descripcion' => 'Artista 1',
+            'foto' => 'Artista 1',
+            'evento_id' => 1,
+        ]);
     }
 
     /**

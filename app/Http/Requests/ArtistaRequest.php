@@ -26,6 +26,7 @@ class ArtistaRequest extends FormRequest
         return [
             'nombre' => 'required|string|max:255',
             'evento_id'=>'required|integer',
+            'foto' => 'required',
         ];
     }
 }

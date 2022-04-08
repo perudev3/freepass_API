@@ -1,5 +1,6 @@
 <?php
 
+use App\Compra;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +24,14 @@ class CreateComprasTable extends Migration
             $table->boolean('pagado')->default(false);
             $table->timestamps();
         });
+        Compra::create([
+            'user_id' => 1,
+            'lista_id' => 1,
+            'codigo_compra_entrada' => '123456789',
+            'total_compra' => 15.00,
+            'status' => false,
+            'pagado' => false,
+        ]);
     }
 
     /**

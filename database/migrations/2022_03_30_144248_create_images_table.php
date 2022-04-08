@@ -1,5 +1,6 @@
 <?php
 
+use App\Image;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,10 @@ class CreateImagesTable extends Migration
             $table->foreignId('evento_id')->constrained();
             $table->timestamps();
         });
+        Image::create([
+            'path' => 'images/eventos/1.jpg',
+            'evento_id' => 1,
+        ]);
     }
 
     /**

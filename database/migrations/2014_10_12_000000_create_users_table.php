@@ -31,9 +31,9 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
         User::create([
-            'name' => 'Master',
-            'email' => "master@master.com",
-            'password' => bcrypt('master'),
+            'name' => 'Admin',
+            'email' => "stivens70espinoza@gmail.com",
+            'password' => bcrypt('password'),
             'id_rol' => 1,
         ]);
     }

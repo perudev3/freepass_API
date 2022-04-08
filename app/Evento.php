@@ -15,7 +15,7 @@ class Evento extends Model
     }
     public static function whereEvents()
     {
-        return Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo')->orderBy('fecha','desc');
+        return Evento::where([['status',true],['fecha','>=',date('Y-m-d')]])->with('tipo','artistas')->orderBy('fecha','desc');
     }
     public function zonas()
     {
@@ -32,6 +32,10 @@ class Evento extends Model
     public function listas()
     {
         return $this->hasMany(Lista::class,'evento_id');
+    }
+    public function place()
+    {
+        return $this->belongsTo(Place::class);
     }
     
 }
