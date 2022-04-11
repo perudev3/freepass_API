@@ -52,7 +52,7 @@ class PlaceController extends Controller
      */
     public function show($id)
     {
-        if ($this->validatePlace()) {
+        if ($this->validateAction()) {
             $place = Place::findOrfail($id)->load('imagenes');
             return response()->json($place, 200);
         }
@@ -79,7 +79,7 @@ class PlaceController extends Controller
      */
     public function update(PlaceRequest $request, Place $place)
     {
-        if ($this->validatePlace()) {
+        if ($this->validateAction()) {
             $place->update($request->all());
             return response()->json(['status' => 'success', 'message' => 'Se Actualizó correctamente'], 200);
         }
@@ -94,7 +94,7 @@ class PlaceController extends Controller
      */
     public function destroy(Place $place)
     {
-        if ($this->validatePlace()) {
+        if ($this->validateAction()) {
             $place->delete();
             return response()->json(['status' => 'success', 'message' => 'Se Eliminó correctamente'], 200);
         }
