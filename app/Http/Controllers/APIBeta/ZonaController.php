@@ -13,19 +13,19 @@ class ZonaController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api')->except(['index', 'show']);
+        $this->middleware('auth:api')->except(['index']);
     }
 
     public function index()
     {
-        $zonas=Zona::select(['id','nombre','portada_img','descripcion'])->get();
+        $zonas = Zona::select(['id', 'nombre', 'portada_img', 'descripcion'])->get();
 
-        return response()->json($zonas,200);
+        return response()->json($zonas, 200);
     }
 
     public function myZonas()
     {
-        return response()->json(auth()->user()->zonas,200);
+        return response()->json(auth()->user()->zonas, 200);
     }
     /**
      * Store a newly created resource in storage.
@@ -39,7 +39,7 @@ class ZonaController extends Controller
         $zona->nombre = $request->nombre;
         $zona->descripcion = $request->descripcion;
         $zona->user_id = auth()->user()->id;
-        if($request->hasFile('portada_img')){
+        if ($request->hasFile('portada_img')) {
             $portada = $request->file('portada_img');
             if (!is_array($portada)) {
                 $portada = [$portada];
@@ -50,7 +50,7 @@ class ZonaController extends Controller
         }
 
         $zona->save();
-        return response()->json($zona, 201);
+        return response()->json(['status' => 'success', 'message' => 'Se registro correctamente'], 201);
     }
 
     /**
@@ -61,7 +61,12 @@ class ZonaController extends Controller
      */
     public function show($id)
     {
-        //
+        $zona=Zona::findOrfail($id);
+        if ($this->validateAction($zona->user_id)) {
+            return response()->json($zona, 200);
+
+        }
+        return response()->json(['status' => 'error', 'message' => 'No tiene los permisos necesarios'], 404);
     }
 
     /**
@@ -71,9 +76,26 @@ class ZonaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ZonaRequest $request, Zona $zona)
     {
-        //
+        if ($this->validateAction($zona->user_id)) {
+            $zona->nombre = $request->nombre;
+            $zona->descripcion = $request->descripcion;
+            $zona->user_id = auth()->user()->id;
+            if ($request->hasFile('portada_img')) {
+                $portada = $request->file('portada_img');
+                if (!is_array($portada)) {
+                    $portada = [$portada];
+                }
+                $custom_name = 'img-' . Str::uuid()->toString() . '.' . $portada[0]->getClientOriginalExtension();
+                $portada[0]->move(public_path() . '/zonas', $custom_name);
+                $zona->portada_img = $custom_name;
+            }
+
+            $zona->save();
+            return response()->json(['status' => 'success', 'message' => 'Se actualizo correctamente'], 201);
+        }
+        return response()->json(['status' => 'error', 'message' => 'No tiene los permisos necesarios'], 404);
     }
 
     /**
@@ -82,11 +104,21 @@ class ZonaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Zona $zona)
     {
-        //
+        if ($this->validateAction($zona->user_id)) {
+            try {
+                $zona->delete();
+                return response()->json(['status' => 'success', 'message' => 'Se elimino correctamente'], 201);
+            } catch (\Throwable $th) {
+                return response()->json(['status' => 'error', 'message' => 'No se puede eliminar porque tiene datos relacionados'], 404);
+            }
+            
+        }
+        return response()->json(['status' => 'error', 'message' => 'No tiene los permisos necesarios'], 404);
     }
-    public function validateAction($user_id){
-        return $user_id===auth()->user()->id || auth()->user()->id_rol===1;
+    public function validateAction($user_id)
+    {
+        return $user_id === auth()->user()->id || auth()->user()->id_rol === 1;
     }
 }

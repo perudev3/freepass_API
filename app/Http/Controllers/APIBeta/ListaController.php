@@ -99,4 +99,6 @@ class ListaController extends Controller
         $message=($lista->status) ? 'habilitada' : 'deshabilitada';
         return response()->json(['message' => "Lista $message con exito"], 200);
     }
+
+  
 }

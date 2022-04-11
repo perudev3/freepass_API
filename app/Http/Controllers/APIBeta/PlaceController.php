@@ -23,6 +23,11 @@ class PlaceController extends Controller
         return response()->json($places, 200);
     }
 
+    public function selectPlaces(){
+        $places = auth()->user()->places()->get(['id','nombre']);
+        return response()->json($places, 200);
+    }
+
 
     public function store(PlaceRequest $request)
     {
@@ -52,7 +57,7 @@ class PlaceController extends Controller
      */
     public function show($id)
     {
-        if ($this->validateAction()) {
+        if ($this->validateAction(Place::findOrfail($id)->user_id)) {
             $place = Place::findOrfail($id)->load('imagenes');
             return response()->json($place, 200);
         }
@@ -79,7 +84,7 @@ class PlaceController extends Controller
      */
     public function update(PlaceRequest $request, Place $place)
     {
-        if ($this->validateAction()) {
+        if ($this->validateAction($place->user_id)) {
             $place->update($request->all());
             return response()->json(['status' => 'success', 'message' => 'Se Actualizó correctamente'], 200);
         }
@@ -94,7 +99,7 @@ class PlaceController extends Controller
      */
     public function destroy(Place $place)
     {
-        if ($this->validateAction()) {
+        if ($this->validateAction($place->user_id)) {
             $place->delete();
             return response()->json(['status' => 'success', 'message' => 'Se Eliminó correctamente'], 200);
         }

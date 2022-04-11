@@ -48,6 +48,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::delete('tipos/{id}', 'APIBeta\TipoController@destroy');
 
     Route::get('lugares', 'APIBeta\PlaceController@index');
+    Route::get('lugares/select', 'APIBeta\PlaceController@selectPlaces');
     Route::get('lugares/{id}', 'APIBeta\PlaceController@show');
     Route::post('lugares', 'APIBeta\PlaceController@store');
     
