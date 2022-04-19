@@ -21,6 +21,7 @@ class CheckRoles
             return $next($request);
         }
         return response()->json([
+            'status'=>'error',
             'message'=>'No tienes permisos para realizar esta acción',
         ],401);
     }

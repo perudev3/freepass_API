@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\APIBeta;
 
 use App\Compra;
+use App\Comprobante;
 use App\Http\Controllers\Controller;
 use App\Invitado;
 use App\Lista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
 class CompraController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //construct
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function index()
     {
-        //
+        $compras = Compra::latest()->paginate(10);
+        return response()->json($compras);
     }
 
     /**
@@ -41,55 +44,72 @@ class CompraController extends Controller
     {
         try {
             DB::beginTransaction();
-            $lista=Lista::findOrFail($request->lista_id);
-            $invitados=json_decode(json_encode($request->invitados));
-            $totalEntradas=count($invitados)+1;
-            if($lista->cantidad_disponible<$totalEntradas){
+            $lista = Lista::findOrFail($request->lista_id);
+            $invitados = json_decode(json_encode($request->invitados));
+            $totalEntradas = count($invitados) + 1;
+            if ($lista->cantidad_disponible < $totalEntradas) {
                 return response()->json([
-                    'message'=>'No hay suficientes entradas disponibles',
-                    'status'=>'error'
-                ],400);
+                    'message' => 'No hay suficientes entradas disponibles',
+                    'status' => 'error'
+                ], 400);
             }
-            
-            $compra=Compra::create([
-                'user_id'=>auth()->user()->id,
-                'lista_id'=>$request->lista_id,
-                'cantidad'=>$totalEntradas,
-                'codigo_compra_entrada'=>Str::uuid()->toString(),
-                'total_compra'=>$lista->precio*$totalEntradas,
-                'status'=>0,
-                'pagado'=>0
+
+            $compra = Compra::create([
+                'user_id' => auth()->user()->id,
+                'lista_id' => $request->lista_id,
+                'cantidad' => $totalEntradas,
+                'codigo_compra_entrada' => Str::uuid()->toString(),
+                'total_compra' => $lista->precio * $totalEntradas,
+                'status' => 0,
+                'pagado' => 0
             ]);
             $lista->update([
-                'cantidad_disponible'=>$lista->cantidad_disponible-$totalEntradas,
+                'cantidad_disponible' => $lista->cantidad_disponible - $totalEntradas,
             ]);
             foreach ($invitados as $invitado) {
                 Invitado::create([
-                    'compra_id'=>$compra->id,
-                    'nombre'=>$invitado->nombre,
-                    'apellido'=>$invitado->apellido,
-                    'dni'=>$invitado->dni,
-                    'email'=>$invitado->email,
-                    'telefono'=>$invitado->telefono,
-                    'codigo_invitacion'=>Str::uuid()->toString(),
-                    'status'=>0
+                    'compra_id' => $compra->id,
+                    'nombre' => $invitado->nombre,
+                    'apellido' => $invitado->apellido,
+                    'dni' => $invitado->dni,
+                    'email' => $invitado->email,
+                    'telefono' => $invitado->telefono,
+                    'codigo_invitacion' => Str::uuid()->toString(),
+                    'status' => 0
                 ]);
             }
             DB::commit();
             return response()->json([
-                'message'=>'Compra realizada con exito',
-                'status'=>'success'
-            ],201);
+                'message' => 'Compra realizada con exito',
+                'status' => 'success',
+                'compra' => $compra->id
+            ], 201);
         } catch (\Throwable $th) {
             DB::rollBack();
             return response()->json([
-                'message'=>'Error al realizar la compra',
-                'status'=>'error'
-            ],400);
+                'message' => 'Error al realizar la compra',
+                'status' => 'error',
+                'error' => $th->getMessage()
+            ], 400);
         }
-       
     }
+    public function enviarComprobante(Request $request)
+    {
+        $imagenes = $request->file('img_comprobante');
+        if (!is_array($imagenes)) {
+            $imagenes = [$imagenes];
+        }
+        //loop throu the array 
+        $file = $imagenes[0];
+        $custom_name = 'img-' . Str::uuid()->toString() . '.' . $file->getClientOriginalExtension();
+        Comprobante::create([
+            'img_comprobante' => $custom_name,
+            'compra_id' => $request->compra_id
+        ]);
+        $file->move(public_path() . '/comprobantes', $custom_name);
 
+        return response()->json(['message' => 'comprobante cargado espere su activación'], 200);
+    }
     /**
      * Display the specified resource.
      *
