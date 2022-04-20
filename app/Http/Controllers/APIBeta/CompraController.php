@@ -20,19 +20,12 @@ class CompraController extends Controller
     }
     public function index()
     {
-        $compras = Compra::latest()->paginate(10);
+        $compras = Compra::with('comprobante')->latest()->paginate(10);
         return response()->json($compras);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -139,9 +132,28 @@ class CompraController extends Controller
      * @param  \App\Compra  $compra
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Compra $compra)
+    public function aprobarCompra($id)
     {
-        //
+        $compra=Compra::findOrFail($id);
+        if(!$compra->hasComprobante()){
+            return response()->json([
+                'message' => 'La compra no cuenta con un comprobante para ser aprobado',
+                'status' => 'error'
+            ], 400);
+        }
+        if ($compra->pagado == 1) {
+            return response()->json([
+                'message' => 'La compra ya fue aprobada',
+                'status' => 'error'
+            ], 400);
+        }
+        $compra->update([
+            'pagado' => 1
+        ]);
+        return response()->json([
+            'message' => 'Compra aprobada con exito',
+            'status' => 'success'
+        ], 200);
     }
 
     /**

@@ -12,4 +12,8 @@ class Compra extends Model
     {
         return $this->hasOne(Comprobante::class);
     }
+    public function hasComprobante()
+    {
+        return $this->comprobante()->exists();
+    }
 }
