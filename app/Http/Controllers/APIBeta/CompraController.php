@@ -4,6 +4,7 @@ namespace App\Http\Controllers\APIBeta;
 
 use App\Compra;
 use App\Comprobante;
+use App\Evento;
 use App\Http\Controllers\Controller;
 use App\Invitado;
 use App\Lista;
@@ -156,6 +157,78 @@ class CompraController extends Controller
         ], 200);
     }
 
+    public function verificarEntrada(Request $request){
+        if(!Evento::find($request->evento_id)){
+            return response()->json([
+                'message' => 'El evento no existe',
+                'status' => 'error'
+            ], 400);
+        }
+        $evento=Evento::find($request->evento_id);
+        if ($evento->fecha < now()->toDateString()) {
+            return response()->json([
+                'message' => 'El evento ya ha finalizado',
+                'status' => 'error'
+            ], 400);
+        }
+        if ($evento->status == 0) {
+            return response()->json([
+                'message' => 'El evento no esta activo',
+                'status' => 'error'
+            ], 400);
+        }
+        
+        if(Compra::where('codigo_compra_entrada',$request->codigo)->first()){
+            $compra=Compra::where('codigo_compra_entrada',$request->codigo)->first();
+            if($compra->pagado==0){
+                return response()->json([
+                    'message' => 'La compra no ha sido aprobada',
+                    'status' => 'error'
+                ], 400);
+            }
+            if($compra->status==1){
+                return response()->json([
+                    'message' => 'La entrada ya fue usada',
+                    'status' => 'error'
+                ], 400);
+            }
+            $compra->update([
+                'status' => 1
+            ]);
+            return response()->json([
+                'message' => 'Entrada verificada con exito',
+                'beneficiario'=>$compra->user,
+                'status' => 'success'
+            ], 200);
+        }
+        if(Invitado::where('codigo_invitacion',$request->codigo)->first()){
+            $invitado=Invitado::where('codigo_invitacion',$request->codigo)->first();
+            if($invitado->compra->pagado==0){
+                return response()->json([
+                    'message' => 'La compra no ha sido aprobada',
+                    'status' => 'error'
+                ], 400);
+            }
+            if($invitado->status==1){
+                return response()->json([
+                    'message' => 'La entrada ya fue usada',
+                    'status' => 'error'
+                ], 400);
+            }
+            $invitado->update([
+                'status' => 1
+            ]);
+            return response()->json([
+                'message' => 'Entrada verificada con exito',
+                'beneficiario'=>$invitado,
+                'status' => 'success'
+            ], 200);
+        }
+        return response()->json([
+            'message' => 'El codigo de entrada no existe',
+            'status' => 'error'
+        ], 400);
+    }
     /**
      * Remove the specified resource from storage.
      *

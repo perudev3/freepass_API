@@ -59,10 +59,12 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('registrar_listas/{evento}', 'APIBeta\ListaController@store');
 
     //Route::post('registrar_invitado', 'APIBeta\InvitadoController@store');
+    
     Route::get('compras', 'APIBeta\CompraController@index');
     Route::post('compras', 'APIBeta\CompraController@store');
     Route::post('compras/enviar_comprobante', 'APIBeta\CompraController@enviarComprobante');
     Route::put('compras/{id}', 'APIBeta\CompraController@aprobarCompra');
+    Route::put('verificarEntrada', 'APIBeta\CompraController@verificarEntrada');
     
     
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider');

@@ -16,4 +16,8 @@ class Compra extends Model
     {
         return $this->comprobante()->exists();
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -12,4 +12,8 @@ class Invitado extends Model
     {
         return $this->belongsTo(Lista::class,'lista_id');
     }
+    public function compra()
+    {
+        return $this->belongsTo(Compra::class,'compra_id');
+    }
 }
