@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\Models\tbl_codigo_activacion;
 use App\Mail\MailRegisterUser;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -195,5 +196,14 @@ class AuthController extends Controller
         } else {
             return ['message' => 'Código incorrecto'];
         }
+    }
+    public function UpdateUser(Request $request){
+        $data=$request->validate([
+            'name'=>'required|string',
+            'telefono'=>'required|string',
+            'fecha_nac'=>'required',
+        ]);
+        Auth::user()->update($data);
+        return response()->json(['status' => 'success', 'message' => 'Editado correctamente'], 404);
     }
 }

@@ -81,6 +81,7 @@ Route::group(['prefix' => 'auth'], function () {
         Route::group(['prefix' => 'master'], function() {
             Route::post('crear_superusuario', 'Mastercontroller@CrearSuperUsuario');
         });
+        Route::put('actualizar_usuario', 'AuthController@UpdateUser');
     });
 });
 
